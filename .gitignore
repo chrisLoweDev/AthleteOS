@@ -1,0 +1,11 @@
+.env
+strava_token.txt
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.venv/
+.DS_Store
+*.egg-info/
+dist/
+build/
