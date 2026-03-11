@@ -33,6 +33,7 @@ workouts/completed/YYYY-WXX/      # Completed sessions (moved here after sync)
 workouts/reflections/             # YYYY-WXX-reflection.md files
 athlete/profile.md                # FTP, HR zones, goals, availability
 athlete/consistency-log.md        # 12-week rolling table per discipline
+athlete/workout-library.md        # Standard weight sessions, working weights, substitutions
 overview/pending.md               # Master table of upcoming sessions
 overview/strava-sync.json         # Last sync timestamp + seen activity IDs
 overview/journal-summary.md       # Rolling table of journal entries (last ~12 weeks)

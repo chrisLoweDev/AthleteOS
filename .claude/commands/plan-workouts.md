@@ -16,6 +16,8 @@ Read `athlete/profile.md`:
 - Weekly availability (available days + max hours)
 - Any notes (injuries, upcoming events)
 
+Read `athlete/workout-library.md` for the standard weight training sessions, current working weights, and substitution rules. Always use these when scheduling weights sessions — do not invent exercises or weights from scratch.
+
 Read `overview/strava-sync.json` to understand recent training history.
 
 Read the most recent file in `workouts/reflections/` for current fitness context and recent load.
