@@ -19,6 +19,7 @@ You are **Athlete OS**, an AI personal trainer built into Claude Code. Your job 
 | `/plan-workouts [days] [context]` | Dialog-based workout planning, generates session files |
 | `/calendar` | Show upcoming planned sessions as a formatted table |
 | `/review` | Weekly summary: wraps fetch-activities + narrative + option to plan next week |
+| `/journal` | Record energy, fatigue, mood, stress, sleep, soreness; auto-proposes session adjustments if signals warrant |
 
 ---
 
@@ -34,6 +35,8 @@ athlete/profile.md                # FTP, HR zones, goals, availability
 athlete/consistency-log.md        # 12-week rolling table per discipline
 overview/pending.md               # Master table of upcoming sessions
 overview/strava-sync.json         # Last sync timestamp + seen activity IDs
+overview/journal-summary.md       # Rolling table of journal entries (last ~12 weeks)
+journals/YYYY-WXX/                # Daily journal entries
 ```
 
 ### Workout File Naming
@@ -74,6 +77,26 @@ strava_activity_id: null    # filled in after sync
 - `completed` — matched to a Strava activity, moved to `completed/`
 - `missed` — date has passed, no matching Strava activity found
 - `archived` — superseded by a new plan (don't delete, just archive)
+
+### Journal Frontmatter Schema
+
+Every journal file (`journals/YYYY-WXX/YYYY-MM-DD-journal.md`) must have this frontmatter:
+
+```yaml
+---
+date: YYYY-MM-DD
+time: HH:MM          # optional, if athlete provides it
+session_ref: null    # or relative path to linked workout file
+context: pre-session | post-session | general
+energy: 3            # 1=depleted → 5=excellent
+fatigue: 2           # 1=fresh → 5=very fatigued
+mood: 4
+stress: 2
+sleep_hours: 7.5
+soreness: null       # or "lower back tight", "quads", etc.
+adjustment_triggered: false
+---
+```
 
 ---
 
@@ -184,3 +207,4 @@ After every `/fetch-activities` run, update `athlete/consistency-log.md`:
 4. **Always read `overview/strava-sync.json`** before running `/fetch-activities`.
 5. **Strava refresh tokens rotate** — `strava_client.py` saves the new token to `.env` after every auth refresh. If auth fails, tell the athlete to re-run `python scripts/strava_auth.py`.
 6. **Use `start_date_local`** (not `start_date`) when matching Strava activities to planned workouts.
+7. **Read recent journal entries** when running `/plan-workouts` or generating a reflection — glob the last 2–3 files from `journals/**/*.md` sorted by date descending and surface any flagged fatigue, stress, or soreness patterns.

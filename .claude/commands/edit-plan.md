@@ -91,35 +91,42 @@ Wait for approval. If the athlete replies "adjust", accept their clarification, 
 
 ### Step 4: Apply changes to files
 
+**Critical rule: every change to `overview/pending.md` must be backed by a matching change to the workout file's frontmatter. The two must always agree. Never update the pending table without first editing the source file.**
+
 For each approved modification:
 
 **Intensity / duration change:**
 - Edit the workout file body: update main set watt ranges, paces, durations, and TSS estimate
 - Add to the YAML frontmatter: `edit_note: "Adjusted YYYY-MM-DD — [brief reason]"`
+- The `status` field stays `pending` — the session still exists
 - Do not alter the original `planned_duration_min` or `planned_distance_km` frontmatter fields — these represent the original plan for reflection comparison
 
 **Skip / archive session:**
 - Edit frontmatter: set `status: archived`, add `edit_note: "Archived YYYY-MM-DD — [athlete's reason]"`
 - Do not delete the file
+- The row must be absent from `overview/pending.md` after regeneration
 
 **Reschedule (date change):**
 - Edit frontmatter: update `date` and `week_folder` (recalculate ISO week using Python's `datetime.isocalendar()` format if needed)
 - Rename the file to match the new date (update the `YYYY-MM-DD` prefix)
 - Move to the correct week folder if the ISO week changed
+- The row in `overview/pending.md` must reflect the new date and link
 
 **Injury accommodation (weights):**
 - Edit the Main Lifts table: remove affected exercises or add a substitute
 - Add a coaching note explaining what was removed and why
-- Add `edit_note` to frontmatter
+- Add `edit_note` to frontmatter; `status` stays `pending`
 
 **Injury accommodation (cycling/running):**
 - Reduce targets in the main set description
 - Add a coaching caution note at the bottom of the file
-- Add `edit_note` to frontmatter
+- Add `edit_note` to frontmatter; `status` stays `pending`
 
 ### Step 5: Regenerate pending table
 
-Rewrite `overview/pending.md` from all remaining `status: pending` files, sorted by date ascending:
+After all file edits are complete, rewrite `overview/pending.md` by reading the current `status` field from every file in `workouts/plans/**/*.md`. Include only files where `status: pending`, sorted by date ascending. Do not manually construct the table from memory — always derive it from the actual file statuses to guarantee alignment:
+
+
 
 ```markdown
 # Pending Workouts

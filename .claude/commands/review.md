@@ -19,6 +19,8 @@ This will:
 
 Read `athlete/consistency-log.md`. Extract the last 4 weeks of data for each discipline.
 
+Glob `journals/**/*.md` sorted by date descending — read the entries from the current week. Count and note: how many entries flagged fatigue ≥ 4, energy ≤ 2, stress ≥ 4. This will be surfaced in Step 3.
+
 ### Step 3: Generate narrative weekly summary
 
 After the reflection is written, produce a human-readable narrative summary (distinct from the reflection's session-by-session breakdown).
@@ -39,6 +41,11 @@ E.g., "Volume was up 15% from last week (7h vs 6h). Intensity was similar."]
 ### Areas to Address
 - [Missed sessions or underperformance, stated constructively]
 - [Any HR or power trends that suggest fatigue or undertraining]
+
+### Subjective Signals This Week
+[Only include this section if journal entries exist for the week. Summarise patterns, e.g.:
+"3 of 5 journal entries flagged high stress (≥4/5). Energy trended low mid-week. This likely explains the reduced output on Wednesday's threshold session."
+If no entries: omit this section entirely.]
 
 ### 4-Week Trajectory
 [Based on consistency-log trends: is the athlete building, maintaining, or declining?

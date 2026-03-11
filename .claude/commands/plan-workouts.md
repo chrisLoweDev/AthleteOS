@@ -20,6 +20,8 @@ Read `overview/strava-sync.json` to understand recent training history.
 
 Read the most recent file in `workouts/reflections/` for current fitness context and recent load.
 
+Glob `journals/**/*.md` sorted by date descending — read the most recent 2–3 entries. Note any signals (fatigue ≥ 4, energy ≤ 2, stress ≥ 4, soreness) that should influence the plan structure. Surface these briefly when proposing the training structure in Step 4 (e.g., "Recent journals flag high stress — I've kept quality sessions lighter this week").
+
 ### Step 2: Check for pending sessions
 
 Glob `workouts/plans/**/*.md` and count files with `status: pending`.
