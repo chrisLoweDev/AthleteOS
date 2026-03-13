@@ -81,8 +81,8 @@ def main():
                         help='Fetch activities after this date (ISO 8601 or Unix timestamp)')
     parser.add_argument('--before', default=None,
                         help='Fetch activities before this date (ISO 8601 or Unix timestamp)')
-    parser.add_argument('--detail', action='store_true',
-                        help='Fetch detailed data for each activity (slower)')
+    parser.add_argument('--no-detail', action='store_true',
+                        help='Skip fetching detailed data for each activity (faster, but no description)')
     args = parser.parse_args()
 
     try:
@@ -124,9 +124,9 @@ def main():
         except ValueError as e:
             print(f"WARNING: Could not apply --before filter: {e}", file=sys.stderr)
 
-    # Optional: fetch detailed data for each activity
-    if args.detail and raw_activities:
-        print(f"Fetching detailed data for {len(raw_activities)} activities...", file=sys.stderr)
+    # Fetch detailed data for each activity (unless --no-detail is passed)
+    if not args.no_detail and raw_activities:
+        print(f"Fetching detail for {len(raw_activities)} activities...", file=sys.stderr)
         detailed = []
         for activity in raw_activities:
             try:

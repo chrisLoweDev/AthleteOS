@@ -67,6 +67,37 @@ For each matched or unplanned activity where `sport_type` is `WeightTraining` or
   - How it felt (RPE or notes)"
 - Record the response. Do not block the sync if the athlete declines to provide detail ("I don't remember" is fine — write "No detail provided" in the reflection).
 
+### Step 5a: Evaluate strength PRs (weight training sessions only)
+
+Skip this step if no weight training activities were processed in Step 5.
+
+**5a-1: Parse athlete's response** from Step 5 into per-exercise structured data:
+- Normalize exercise names to canonical names: Back Squat, Romanian Deadlift, Bench Press, Overhead Press, Bent-Over Row, Pull-Ups
+- For each set: weight (kg), reps completed, and any qualifier ("clean", "conservative", "failed", "dropped to N reps")
+- Ignore accessory work (curls, lateral raises, core twists, etc.)
+
+**5a-2: Read current PR table** from `athlete/profile.md` under `## Strength PRs`.
+
+**5a-3: Evaluate PR conditions for each canonical exercise:**
+
+| PR Type | Rule |
+|---------|------|
+| 5×5 Best | **Confirmed (no prefix):** all 5 sets × ≥5 reps clean, no drops, not conservative weight. **Estimated (`~` prefix):** ≥3 sets clean and no set drops below 4 reps — record `~weight`; conservative/return weight still disqualifies |
+| Best 10-Rep Set | Highest weight for ≥10 reps in any single set; conservative sets excluded |
+| Est. 1RM (Epley) | `weight × (1 + reps/30)` from best clean set; pick max across all clean sets; skip conservative sets; skip Pull-Ups |
+| Pull-Ups | Track best single-set rep count as "BW × N reps"; no 1RM estimate |
+
+**5a-4: Update `athlete/profile.md`** for any new PRs:
+- Update the relevant columns (Est. 1RM, 5×5 Best, Best 10-Rep Set), set Last Updated to today's date, and update Notes
+- Do not modify rows where no PR was achieved
+- If a set was attempted but failed (e.g., "attempted 85kg — failed sets 4-5"), update Notes only
+
+**5a-5: Compile PR summary** for use in Step 6 and Step 11:
+```
+New PRs this session: [list, or "none"]
+No new PRs: [brief reason per exercise where attempted]
+```
+
 ### Step 6: Generate weekly reflection
 
 Determine the ISO week(s) of the fetched activities. Create a reflection file for each week involved: `workouts/reflections/YYYY-WXX-reflection.md`
@@ -100,6 +131,8 @@ _Generated: [today's date]_
 
 ### Weight Training Detail
 [Insert athlete's responses from Step 5]
+
+**Strength PRs:** [Insert Step 5a PR summary — "New PRs: ..." or "No new PRs this session"]
 
 ## Observations
 [3-5 bullet points: patterns, trends, what went well, what to watch]
@@ -160,6 +193,7 @@ Sync complete — [date]
 
 Reflection written: workouts/reflections/[week]-reflection.md
 Consistency log updated: athlete/consistency-log.md
+[If at least one PR value changed: Strength PRs updated: athlete/profile.md]
 
 [Any issues or action items for the athlete]
 ```

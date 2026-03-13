@@ -2,7 +2,7 @@
 
 _Reference for `/plan-workouts`. Always use these sessions and weights when scheduling strength work — update working weights here as you progress._
 
-**Working weights last updated:** 2026-03-11 (from W11 plan targets — not yet confirmed in a completed session)
+**Working weights last updated:** 2026-03-13 (confirmed by athlete — actual training weights, not illness-adjusted)
 
 ---
 
@@ -22,9 +22,9 @@ _Reference for `/plan-workouts`. Always use these sessions and weights when sche
 
 | Exercise | Warm-Up Sets | Working Sets | Reps | Working Weight | Notes |
 |----------|-------------|--------------|------|----------------|-------|
-| Squat (Barbell) | 2×6 @ 50kg | 5×5 | 5 | **65kg** | Neutral spine, brace hard throughout |
-| Bench Press (Barbell) | 2×6 @ 40kg | 5×5 | 5 | **60kg** | Full ROM, controlled descent |
-| Bent-Over Row (Barbell) | 2×6 @ 40kg | 5×5 | 5 | **55kg** | Hinge to ~45°, pull to lower chest |
+| Squat (Barbell) | 2×6 @ 60kg | 5×5 | 5 | **80kg** | 1RM ~100kg. Neutral spine, brace hard throughout |
+| Bench Press (Barbell) | 2×6 @ 50kg | 5×5 | 5 | **80kg** | Full ROM, controlled descent |
+| Bent-Over Row (Barbell) | 2×6 @ 45kg | 5×5 | 5 | **70kg** | Hinge to ~45°, pull to lower chest |
 
 #### Accessory Work
 
