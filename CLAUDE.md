@@ -69,6 +69,7 @@ planned_distance_km: 45.0   # null for weights
 week_folder: YYYY-WXX
 key_focus: "Threshold intervals"
 strava_activity_id: null    # filled in after sync
+hevy_routine_id: null       # weights only; filled in after /push-workouts
 ---
 ```
 
