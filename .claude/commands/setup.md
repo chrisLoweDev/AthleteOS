@@ -45,15 +45,45 @@ python scripts/fetch_activities.py --after [30 days ago date in YYYY-MM-DD forma
   - If `STRAVA_REFRESH_TOKEN` is missing or empty: tell them to run `python scripts/strava_auth.py`
   - Refer them to `setup/SETUP.md` for step-by-step instructions
 
-### Step 4: Confirm and next steps
+### Step 4: Hevy connectivity (optional)
+
+Ask:
+```
+Do you have a Hevy Pro account? (Hevy Pro is required for API access — it enables pushing
+workout routines directly to your Hevy app.)
+
+Y / N / skip for now
+```
+
+- If **N or skip**: note "Hevy: skipped" and proceed to Step 5.
+- If **Y**: proceed to Phase 2 below.
+
+**Phase 2 — Collect API key:**
+
+Ask:
+```
+Get your API key at: hevy.com/settings?developer
+→ Log in → Settings → Developer → Generate Key
+
+Paste your Hevy API key here:
+```
+
+- Write `HEVY_API_KEY=<key>` to `.env` (append if file exists, create if not — use the Edit tool)
+- Run `python3 scripts/fetch_hevy_exercises.py` to populate the exercise cache
+  - On success: note "Hevy: connected (X exercises cached)"
+  - On failure: note the error message and tell the user to re-check the key or retry with `/sync-hevy-exercises`
+
+### Step 5: Confirm and next steps
 
 Print:
 ```
 Profile saved to athlete/profile.md
 Strava: [connected / needs setup]
+Hevy:   [connected (X exercises cached) / skipped / needs setup]
 
 Next steps:
 - Run /plan-workouts to create your first training block
 - Run /fetch-activities after completing workouts to log progress
+- Run /push-workouts to sync weights sessions to Hevy
 - Run /calendar to see your upcoming sessions
 ```

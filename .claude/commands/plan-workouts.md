@@ -18,6 +18,11 @@ Read `athlete/profile.md`:
 
 Read `athlete/workout-library.md` for the standard weight training sessions, current working weights, and substitution rules. Always use these when scheduling weights sessions — do not invent exercises or weights from scratch.
 
+Read `data/hevy-exercises.json` if it exists:
+- Extract the set of exercise name keys from `exercises`
+- For weights sessions, **only use exercise names present as keys in the cache** — these are the exact names Hevy recognises
+- If the cache is missing, warn: "data/hevy-exercises.json not found — using workout-library names only. Run /sync-hevy-exercises before pushing to Hevy."
+
 Read `overview/strava-sync.json` to understand recent training history.
 
 Read the most recent file in `workouts/reflections/` for current fitness context and recent load.

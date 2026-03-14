@@ -2,6 +2,8 @@
 
 _Reference for `/plan-workouts`. Always use these sessions and weights when scheduling strength work — update working weights here as you progress._
 
+> **Important:** Exercise names in this library must exactly match entries in `data/hevy-exercises.json`. If you add a new exercise, verify the name against the cache (or run `/sync-hevy-exercises` then search the JSON) before adding it here — a mismatch will cause `/push-workouts` to fail with exit code 3.
+
 **Working weights last updated:** 2026-03-13 (confirmed by athlete — actual training weights, not illness-adjusted)
 
 ---
@@ -24,13 +26,13 @@ _Reference for `/plan-workouts`. Always use these sessions and weights when sche
 |----------|-------------|--------------|------|----------------|-------|
 | Squat (Barbell) | 2×6 @ 60kg | 5×5 | 5 | **80kg** | 1RM ~100kg. Neutral spine, brace hard throughout |
 | Bench Press (Barbell) | 2×6 @ 50kg | 5×5 | 5 | **80kg** | Full ROM, controlled descent |
-| Bent-Over Row (Barbell) | 2×6 @ 45kg | 5×5 | 5 | **70kg** | Hinge to ~45°, pull to lower chest |
+| Bent Over Row (Barbell) | 2×6 @ 45kg | 5×5 | 5 | **70kg** | Hinge to ~45°, pull to lower chest |
 
 #### Accessory Work
 
 | Exercise | Sets | Reps | Weight |
 |----------|------|------|--------|
-| Hanging Leg Raises | 4 | 8 | Bodyweight |
+| Hanging Leg Raise | 4 | 8 | Bodyweight |
 | Bicep Curl (Barbell) | 3 | 10 | 20kg |
 
 #### Cool Down
@@ -60,14 +62,14 @@ _Reference for `/plan-workouts`. Always use these sessions and weights when sche
 |----------|-------------|--------------|------|----------------|-------|
 | Romanian Deadlift (Barbell) | 2×6 @ 60kg | 5×5 | 5 | **80kg** | Primary cycling power source — posterior chain |
 | Overhead Press (Barbell) | 2×6 @ 30kg | 5×5 | 5 | **40kg** | Strict press, no leg drive |
-| Pull-Ups | — | 5×5 | 5 | Bodyweight (84kg) | Full ROM, controlled descent |
+| Pull Up | — | 5×5 | 5 | Bodyweight (84kg) | Full ROM, controlled descent |
 
 #### Accessory Work
 
 | Exercise | Sets | Reps | Weight |
 |----------|------|------|--------|
-| Russian Twists | 4 | 12 | Bodyweight |
-| Hanging Leg Raises | 3 | 8 | Bodyweight |
+| Russian Twist (Bodyweight) | 4 | 12 | Bodyweight |
+| Hanging Leg Raise | 3 | 8 | Bodyweight |
 
 #### Cool Down
 - 5 min stretching: hamstring, hip flexor, lat stretch, thoracic extension
@@ -76,7 +78,7 @@ _Reference for `/plan-workouts`. Always use these sessions and weights when sche
 | Normal Exercise | Substitute | When to Use |
 |-----------------|-----------|-------------|
 | Romanian Deadlift | Leg Press or Single-Leg RDL (light) | Lower back niggle — avoid hinged load under bar |
-| Pull-Ups | Lat Pulldown @ 55–60kg | If pull-up volume is too fatiguing mid-block |
+| Pull Up | Lat Pulldown @ 55–60kg | If pull-up volume is too fatiguing mid-block |
 
 ---
 

@@ -38,6 +38,7 @@ overview/pending.md               # Master table of upcoming sessions
 overview/strava-sync.json         # Last sync timestamp + seen activity IDs
 overview/journal-summary.md       # Rolling table of journal entries (last ~12 weeks)
 journals/YYYY-WXX/                # Daily journal entries
+data/hevy-exercises.json          # Hevy exercise name→ID cache (refresh with /sync-hevy-exercises)
 ```
 
 ### Workout File Naming
@@ -210,3 +211,4 @@ After every `/fetch-activities` run, update `athlete/consistency-log.md`:
 5. **Strava refresh tokens rotate** — `strava_client.py` saves the new token to `.env` after every auth refresh. If auth fails, tell the athlete to re-run `python scripts/strava_auth.py`.
 6. **Use `start_date_local`** (not `start_date`) when matching Strava activities to planned workouts.
 7. **Read recent journal entries** when running `/plan-workouts` or generating a reflection — glob the last 2–3 files from `journals/**/*.md` sorted by date descending and surface any flagged fatigue, stress, or soreness patterns.
+8. **Always read `data/hevy-exercises.json`** before generating weights prescriptions — only use exercise names present as keys in the cache to ensure Hevy push compatibility. If the cache is missing, warn and suggest running `/sync-hevy-exercises`.

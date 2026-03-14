@@ -78,7 +78,22 @@ You should see a JSON array of your recent Strava activities printed to the term
 
 ---
 
-## Step 6: Open Claude Code
+## Step 6: Add your Hevy API key (optional)
+
+If you have a **Hevy Pro** account, you can push workout routines directly to Hevy.
+
+1. Go to [hevy.com/settings?developer](https://www.hevy.com/settings?developer)
+2. Log in → Settings → Developer → Generate Key
+3. Add it to your `.env` file:
+   ```
+   HEVY_API_KEY=your_key_here
+   ```
+
+If you don't have Hevy Pro, skip this step — you can add it later via `/setup`.
+
+---
+
+## Step 7: Open Claude Code
 
 ```bash
 cd /path/to/AthleteOS
@@ -91,11 +106,11 @@ Run the onboarding command to fill in your athlete profile:
 /setup
 ```
 
-This walks you through entering your FTP, HR zones, threshold pace, goals, and weekly availability. It also confirms Strava connectivity.
+This walks you through entering your FTP, HR zones, threshold pace, goals, and weekly availability. It confirms Strava connectivity and optionally sets up Hevy.
 
 ---
 
-## Step 7: Plan your first training block
+## Step 8: Plan your first training block
 
 ```
 /plan-workouts 7
@@ -121,7 +136,7 @@ Claude will ask a few questions and then propose a week of training for your app
 ```
 AthleteOS/
 ├── CLAUDE.md                    # AI instructions (don't edit unless you know what you're doing)
-├── .env                         # Your Strava credentials (never commit this)
+├── .env                         # Your Strava + Hevy credentials (never commit this)
 ├── athlete/
 │   ├── profile.md               # Your FTP, zones, goals — edit this directly anytime
 │   └── consistency-log.md       # Auto-updated rolling training log
@@ -132,10 +147,14 @@ AthleteOS/
 ├── overview/
 │   ├── pending.md               # Quick view of upcoming sessions
 │   └── strava-sync.json         # Sync state (don't edit manually)
+├── data/
+│   └── hevy-exercises.json      # Hevy exercise name→ID cache (refresh with /sync-hevy-exercises)
 └── scripts/
     ├── strava_auth.py           # One-time OAuth (run once)
     ├── strava_client.py         # Strava API wrapper (used by fetch script)
     ├── fetch_activities.py      # Called by /fetch-activities
+    ├── fetch_hevy_exercises.py  # Populates hevy-exercises.json cache
+    ├── push_hevy.py             # Called by /push-workouts
     └── requirements.txt
 ```
 

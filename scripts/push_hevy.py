@@ -10,13 +10,16 @@ Exit codes:
     0 — success (or already pushed)
     1 — general error
     2 — HEVY_API_KEY not set
-    3 — unknown exercise name not in HEVY_EXERCISE_IDS
+    3 — unknown exercise name not in cache
+    4 — exercise cache (data/hevy-exercises.json) not found
 """
 
 import argparse
+import json
 import os
 import re
 import sys
+from datetime import datetime, timezone
 
 import requests
 from dotenv import load_dotenv
@@ -25,19 +28,42 @@ ENV_PATH = os.path.join(os.path.dirname(__file__), '..', '.env')
 load_dotenv(dotenv_path=ENV_PATH)
 
 HEVY_BASE = "https://api.hevyapp.com/v1"
+CACHE_PATH = os.path.join(os.path.dirname(__file__), '..', 'data', 'hevy-exercises.json')
+CACHE_STALE_DAYS = 7
 
-# Verified via API on 2026-03-13
-HEVY_EXERCISE_IDS = {
-    "Squat (Barbell)":             "D04AC939",  # Squat (Barbell)
-    "Bench Press (Barbell)":       "79D0BB3A",  # Bench Press (Barbell)
-    "Bent-Over Row (Barbell)":     "55E6546F",  # Bent Over Row (Barbell)
-    "Romanian Deadlift (Barbell)": "2B4B7310",  # Romanian Deadlift (Barbell)
-    "Overhead Press (Barbell)":    "7B8D84E8",  # Overhead Press (Barbell)
-    "Pull-Ups":                    "1B2B1E7C",  # Pull Up
-    "Hanging Leg Raises":          "F8356514",  # Hanging Leg Raise
-    "Bicep Curl (Barbell)":        "A5AC6449",  # Bicep Curl (Barbell)
-    "Russian Twists":              "BB83BDDE",  # Russian Twist (Bodyweight)
-}
+
+def load_exercise_ids():
+    """Load exercise name→ID mapping from local cache."""
+    if not os.path.exists(CACHE_PATH):
+        print(
+            "ERROR: data/hevy-exercises.json not found.\n"
+            "Run: python3 scripts/fetch_hevy_exercises.py\n"
+            "Or use the /sync-hevy-exercises command.",
+            file=sys.stderr,
+        )
+        sys.exit(4)
+
+    with open(CACHE_PATH) as f:
+        data = json.load(f)
+
+    last_synced = data.get("last_synced", "")
+    if last_synced:
+        try:
+            synced_dt = datetime.strptime(last_synced, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+            age_days = (datetime.now(timezone.utc) - synced_dt).days
+            if age_days > CACHE_STALE_DAYS:
+                print(
+                    f"WARNING: data/hevy-exercises.json is {age_days} days old. "
+                    "Run /sync-hevy-exercises to refresh.",
+                    file=sys.stderr,
+                )
+        except ValueError:
+            pass
+
+    return data["exercises"]
+
+
+HEVY_EXERCISE_IDS = load_exercise_ids()
 
 
 def parse_frontmatter(text):
@@ -106,7 +132,12 @@ def build_exercises(main_rows, accessory_rows):
 
         if name not in exercise_sets:
             if name not in HEVY_EXERCISE_IDS:
-                print(f"ERROR: '{name}' not in HEVY_EXERCISE_IDS — run hevy_lookup.py to find the ID and add it.", file=sys.stderr)
+                print(
+                    f"ERROR: '{name}' not found in data/hevy-exercises.json.\n"
+                    "Check the exercise name matches the Hevy library exactly, "
+                    "or run /sync-hevy-exercises to refresh the cache.",
+                    file=sys.stderr,
+                )
                 sys.exit(3)
             exercise_sets[name] = []
             exercise_order.append(name)
