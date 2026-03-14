@@ -26,9 +26,12 @@ Ask:
 8. "What are your primary training goals? (e.g., complete a triathlon, improve cycling FTP, run a half marathon)"
 9. "Which days of the week are you available to train? (e.g., Mon, Wed, Thu, Sat, Sun)"
 10. "What's your maximum training hours per week? (e.g., 8)"
-11. "Anything else I should know? (injuries, upcoming races, travel, etc.)"
+11. "Do you train at a commercial gym, home gym, or somewhere else? Describe your setup briefly — e.g. 'full commercial gym', 'home garage with barbell and rack', 'apartment with dumbbells only'."
+12. "What equipment do you have regular access to? List anything relevant — e.g. barbell + rack, dumbbells (and up to what weight), pull-up bar, cable machine, kettlebells, resistance bands, machines (leg press, Smith, etc.)."
+13. "Any exercises you prefer to avoid, can't do, or have strong preferences about? E.g. 'no Smith machine', 'bad shoulder so no overhead press', 'prefer barbell over machines for compounds'."
+14. "Anything else I should know? (injuries, upcoming races, travel, etc.)"
 
-After collecting answers, fill in `athlete/profile.md` with the provided values, replacing all `[placeholder]` values.
+After collecting answers, fill in `athlete/profile.md` with the provided values, replacing all `[placeholder]` values. Write Q11 as free text under "Gym Setup", Q12 as a bullet list under "Available Equipment", and Q13 as a bullet list under "Exercise Preferences & Exclusions" (use "None specified" if no answer given).
 
 Compute training zones from the provided FTP and max HR and fill in the zone tables.
 
