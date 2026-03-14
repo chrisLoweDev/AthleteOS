@@ -82,6 +82,70 @@ _Extensible library of named strength routines for use by `/plan-workouts`. When
 
 ---
 
+---
+
+## Swim Sessions
+
+_Paces are computed from CSS (Critical Swim Speed) in `athlete/profile.md`. If CSS is TBD, use RPE guidance until a CSS test is completed._
+
+### Endurance Base Swim (Z2)
+
+**Focus:** Aerobic base — CSS + 5–15 sec/100m
+**Target Distance:** ~2,000m
+**Duration:** ~45 min
+**Frequency:** 1–2x per week as aerobic volume
+
+#### Warm Up (400m)
+- 200m easy (Z1 — CSS + 15–20 sec/100m)
+- 4×50m with 15 sec rest, building to Z2 pace
+
+#### Main Set (1,300m)
+- 5×200m @ Z2 pace (CSS + 5–15 sec/100m), 20 sec rest between
+- Or: 13×100m @ Z2 pace, 15 sec rest between
+
+#### Cool Down (300m)
+- 200m easy (Z1)
+- 100m backstroke or choice (low effort)
+
+#### Notes
+- Focus on consistent pace across all reps — not fast, just steady
+- If open water: remove rest intervals, hold effort by feel (conversational effort)
+
+---
+
+### Threshold Intervals (Z4)
+
+**Focus:** CSS-pace quality work — CSS − 0–5 sec/100m
+**Target Distance:** ~2,000m
+**Duration:** ~45 min
+**Frequency:** 1x per week maximum; do not schedule same day as Z4+ cycling or heavy weights
+
+#### Warm Up (400m)
+- 200m easy (Z1)
+- 4×50m @ Z3 pace with 15 sec rest (build into threshold)
+
+#### Main Set (1,200m)
+- 6×200m @ CSS pace (Z4 — CSS − 0–5 sec/100m), 30 sec rest between reps
+- Or: 12×100m @ CSS pace, 20 sec rest between
+
+#### Cool Down (400m)
+- 300m easy (Z1)
+- 100m choice/backstroke
+
+#### Notes
+- Rest intervals are non-negotiable — the goal is to hold pace, not grind through fatigue
+- If 50m pool: adjust distances to nearest 50m multiple (e.g., 6×150m or 4×250m)
+- If open water: replace with 4×5 min @ threshold effort with 1 min easy between
+
+#### Substitutions
+| Normal | Substitute | When |
+|--------|-----------|------|
+| 6×200m @ CSS | 8×150m @ CSS | Short-course pool only (25m) |
+| Threshold interval session | 45 min steady Z2/Z3 | Moderate fatigue — preserve quality by reducing intensity |
+| Pool session | Open water Z2 effort | No pool access — remove rest intervals, hold Z2–Z3 by HR |
+
+---
+
 ## Progression Rules
 
 - **Standard progression:** Add 2.5kg to working weight when you complete all sets and reps cleanly with good form

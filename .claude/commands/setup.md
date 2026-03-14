@@ -30,8 +30,16 @@ Ask:
 12. "What equipment do you have regular access to? List anything relevant — e.g. barbell + rack, dumbbells (and up to what weight), pull-up bar, cable machine, kettlebells, resistance bands, machines (leg press, Smith, etc.)."
 13. "Any exercises you prefer to avoid, can't do, or have strong preferences about? E.g. 'no Smith machine', 'bad shoulder so no overhead press', 'prefer barbell over machines for compounds'."
 14. "Anything else I should know? (injuries, upcoming races, travel, etc.)"
+15. "Do you include swimming in your training, or plan to? (Y / N / maybe)"
 
-After collecting answers, fill in `athlete/profile.md` with the provided values, replacing all `[placeholder]` values. Write Q11 as free text under "Gym Setup", Q12 as a bullet list under "Available Equipment", and Q13 as a bullet list under "Exercise Preferences & Exclusions" (use "None specified" if no answer given).
+If answer to Q15 is **N**: skip Q16–Q17.
+If answer is **Y or maybe**: ask:
+
+16. "How would you describe your swimming? (e.g., 'complete beginner', 'comfortable in the pool — recreational', 'ex-club swimmer', 'triathlon background')"
+17. "Do you have regular access to a pool? If so, is it a 25m or 50m pool? Any open water access?"
+18. "What's your comfortable sustained swim pace per 100m? If you don't know, describe a recent swim (e.g., '1km in 22 minutes') and I'll estimate it. Or say 'unknown' — we can establish it with a CSS test set."
+
+After collecting answers, fill in `athlete/profile.md` with the provided values, replacing all `[placeholder]` values. Write Q11 as free text under "Gym Setup", Q12 as a bullet list under "Available Equipment", and Q13 as a bullet list under "Exercise Preferences & Exclusions" (use "None specified" if no answer given). Write Q17 as free text under "Pool Access". If CSS (from Q18) is known or can be estimated from a recent swim, compute and fill in swim zones; otherwise leave as TBD.
 
 Compute training zones from the provided FTP and max HR and fill in the zone tables.
 

@@ -34,6 +34,7 @@ Type emojis:
 - Cycling → 🚴
 - Running → 🏃
 - Weights → 💪
+- Swimming → 🏊
 
 After each week's table, add a brief load note if relevant (e.g., "2 quality sessions this week — ensure recovery between Thu and Sat").
 
@@ -44,6 +45,7 @@ After all weeks:
 Upcoming sessions: [N total]
   🚴 Cycling: [N sessions]
   🏃 Running: [N sessions]
+  🏊 Swimming: [N sessions]
   💪 Weights: [N sessions]
   Spanning [X] days ([start date] to [end date])
 ```

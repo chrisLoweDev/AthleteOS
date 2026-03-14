@@ -11,6 +11,7 @@ Generates a personalized training block through a dialog with the athlete. Creat
 Read `athlete/profile.md`:
 - FTP and last test date
 - Running threshold pace
+- Swim CSS and pool access
 - Max HR, resting HR
 - Current goals
 - Weekly availability (available days + max hours)
@@ -80,6 +81,7 @@ Based on the athlete's profile, recent load, fatigue level, and the planning con
 - **Polarized model**: mostly Z1/Z2 aerobic work with 1–2 quality sessions per discipline per week
 - Never schedule hard sessions (Z4+, heavy weights) on back-to-back days
 - Z2 cycling or easy running can follow any session
+- Easy swimming (Z1/Z2) can follow any session. Do not schedule Z4/Z5 swim intervals on the same day as Z4+ cycling or heavy weights.
 - If athlete mentions a race within the window: apply taper in final 5–7 days (−40% volume, −20% intensity)
 - Respect the athlete's stated available days from `athlete/profile.md`
 
@@ -219,6 +221,41 @@ strava_activity_id: null
 
 ## Notes
 Fill in "Actual Weight" during/after the session.
+[Any session-specific coaching notes]
+```
+
+**Swimming file template:**
+```markdown
+---
+date: YYYY-MM-DD
+type: swimming
+discipline: Swim
+status: pending
+planned_duration_min: [X]
+planned_distance_m: [X]
+week_folder: YYYY-WXX
+key_focus: "[description]"
+strava_activity_id: null
+---
+
+# [YYYY-MM-DD] Swimming: [Session Name]
+
+**Date:** [Day, DD Month YYYY]
+**Target Distance:** [X]m | **Duration:** ~[X] min
+
+## Warm Up ([X]m)
+- [Easy swimming at Z1/Z2 pace — CSS + 15–20 sec/100m]
+
+## Main Set
+- [Intervals or sustained effort with pace ranges in min:sec/100m computed from CSS]
+- [Rest intervals between sets]
+
+## Cool Down ([X]m)
+- [Easy cool-down at recovery pace]
+
+## Notes
+CSS reference: [min:sec]/100m (from athlete/profile.md)
+Pool: [25m / 50m / open water]
 [Any session-specific coaching notes]
 ```
 

@@ -45,9 +45,9 @@ data/hevy-exercises.json          # Hevy exercise name→ID cache (refresh with 
 
 `YYYY-MM-DD-[type]-[slug].md`
 
-- type: `cycling`, `running`, or `weights`
+- type: `cycling`, `running`, `weights`, or `swimming`
 - slug: 2-3 words, kebab-cased
-- Examples: `2026-03-12-cycling-threshold-intervals.md`, `2026-03-14-running-easy-base.md`
+- Examples: `2026-03-12-cycling-threshold-intervals.md`, `2026-03-14-running-easy-base.md`, `2026-03-15-swimming-z2-endurance.md`
 
 ### ISO Week Folders
 
@@ -62,11 +62,12 @@ Every workout file must have this frontmatter:
 ```yaml
 ---
 date: YYYY-MM-DD
-type: cycling | running | weights
-discipline: Ride | Run | WeightTraining
+type: cycling | running | weights | swimming
+discipline: Ride | Run | WeightTraining | Swim
 status: pending | completed | missed | archived
 planned_duration_min: 90
-planned_distance_km: 45.0   # null for weights
+planned_distance_km: 45.0   # null for weights and swimming
+planned_distance_m: null    # swimming only (meters); null for all other types
 week_folder: YYYY-WXX
 key_focus: "Threshold intervals"
 strava_activity_id: null    # filled in after sync
@@ -135,6 +136,22 @@ Example (FTP = 230W):
 
 **Always compute paces from athlete's threshold pace in `athlete/profile.md`.**
 
+### Swimming Zones (from CSS)
+
+CSS = Critical Swim Speed (sustainable pace for ~1500m effort, expressed as sec/100m)
+
+| Zone | Name | Pace vs CSS |
+|------|------|-------------|
+| Z1 | Recovery | CSS + 15–20 sec/100m |
+| Z2 | Aerobic | CSS + 5–15 sec/100m |
+| Z3 | Tempo | CSS ± 5 sec/100m |
+| Z4 | Threshold | CSS − 0–5 sec/100m |
+| Z5 | VO2max | CSS − 5–10 sec/100m |
+
+**CSS test:** 400m TT + 200m TT. CSS = (400 − 200) ÷ (T400 − T200) in m/sec, expressed as sec/100m.
+
+**Always compute swim paces from CSS in `athlete/profile.md`.**
+
 ### HR Zones (from Max HR)
 
 | Zone | % Max HR |
@@ -161,6 +178,7 @@ Example (FTP = 230W):
 - Default training distribution: **polarized** — mostly Z1/Z2 with 1–2 quality sessions per discipline per week
 - Never schedule hard sessions (Z4+, heavy weights) on back-to-back days
 - Z2 cycling can follow any session
+- Easy swimming (Z1/Z2) can follow any session — low musculoskeletal load. Avoid hard swim intervals (Z4/Z5) on the same day as a Z4+ cycling session or heavy weights.
 - If athlete mentions a race within the planning window: automatically apply taper (−40% volume, −20% intensity) in the final 5–7 days
 
 ### Pending Conflict Handling
@@ -183,7 +201,7 @@ If `/plan-workouts` is called when pending sessions exist, always present the 3-
 
 After every `/fetch-activities` run, update `athlete/consistency-log.md`:
 - Add or update a row for the synced week
-- Columns: Week, Cycling Sessions, Cycling Volume (km), Running Sessions, Running Volume (km), Weights Sessions, Total Hours
+- Columns: Week, Cycling Sessions, Cycling Volume (km), Running Sessions, Running Volume (km), Swimming Sessions, Swimming Volume (m), Weights Sessions, Total Hours
 - Keep rolling 12-week window — prune rows older than 12 weeks from the top
 
 ---

@@ -39,6 +39,7 @@ For each Strava activity, attempt to find a matching planned workout by:
    - `Ride`, `VirtualRide`, `EBikeRide` → `cycling`
    - `Run`, `VirtualRun`, `TrailRun` → `running`
    - `WeightTraining`, `Workout` → `weights`
+   - `Swim`, `OpenWaterSwim` → `swimming`
 3. If multiple planned sessions on the same date with the same type: ask the athlete which Strava activity matches which plan
 
 Track:
@@ -111,7 +112,7 @@ _Generated: [today's date]_
 ## Summary
 - **Total sessions:** [N]
 - **Total time:** [Xh Ym]
-- **Disciplines:** [Cycling: Xh | Running: Y km | Weights: N sessions]
+- **Disciplines:** [Cycling: Xh | Running: Y km | Swimming: Z m | Weights: N sessions]
 
 ## Session Analysis
 
@@ -162,6 +163,7 @@ For athlete-confirmed-completed workouts with no Strava data: change `status: pe
 Read `athlete/consistency-log.md`. For the synced week(s), compute:
 - Cycling: session count, total distance (km), total duration
 - Running: session count, total distance (km)
+- Swimming: session count, total distance (meters), total duration
 - Weights: session count
 - Total hours across all disciplines
 
