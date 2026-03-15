@@ -50,10 +50,13 @@ Run:
 python3 scripts/fetch_activities.py --after [30 days ago date in YYYY-MM-DD format]
 ```
 
-- If it exits with an error: display the error message and guide the user:
-  - Check that `.env` has `STRAVA_CLIENT_ID`, `STRAVA_CLIENT_SECRET`, and `STRAVA_REFRESH_TOKEN` set
-  - If `STRAVA_REFRESH_TOKEN` is missing or empty: tell them to run `python scripts/strava_auth.py`
-  - Refer them to `setup/SETUP.md` for step-by-step instructions
+- If it exits with an error: display the error message, then handle as follows:
+  - If `STRAVA_REFRESH_TOKEN` is missing, invalid, or the error mentions auth/credentials: offer to run the authorization for them. Say something like:
+    > "Strava isn't authorized yet. I can run the authorization flow for you — a browser window will open and you'll just click Authorize on Strava's site. To do this, I'll need your AthleteOS Client ID and Client Secret (provided by whoever shared this with you). Paste them here and I'll take care of the rest."
+  - Once the user provides the CLIENT_ID and CLIENT_SECRET, run: `python3 scripts/strava_auth.py --client-id <CLIENT_ID> --client-secret <CLIENT_SECRET>`
+  - On success: confirm "Strava authorized as [name]. Credentials saved." and re-run the fetch to confirm connectivity before proceeding to Step 4.
+  - On failure: display the error and refer them to `setup/SETUP.md` Step 1 for troubleshooting.
+  - Do **not** tell the user to register their own Strava API app.
   - Then proceed to Step 4.
 
 - If it succeeds (outputs a JSON array):

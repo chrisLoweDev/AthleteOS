@@ -4,35 +4,26 @@ Follow these steps once to get everything working. After setup, use Claude Code 
 
 ---
 
-## Step 1: Register a Strava API App
+## Step 1: Authorize Strava
 
-1. Go to [strava.com/settings/api](https://www.strava.com/settings/api)
-2. Fill in:
-   - **Application Name:** Athlete OS (or anything)
-   - **Category:** Data Importer
-   - **Website:** http://localhost
-   - **Authorization Callback Domain:** `localhost`
-3. Click **Save** and note your **Client ID** and **Client Secret**
+Run the following command, substituting the credentials provided by your AthleteOS administrator:
+
+```bash
+python3 scripts/strava_auth.py --client-id <CLIENT_ID> --client-secret <CLIENT_SECRET>
+```
+
+A browser window will open. Log in to Strava and click **Authorize**. The script will save your credentials automatically to `.env`.
+
+You should see: `Success! Authorized as: [Your Name]`
+
+**Troubleshooting:**
+- If the browser doesn't open, copy the URL printed to the terminal and open it manually
+- If port 8080 is in use, edit `CALLBACK_PORT` in `scripts/strava_auth.py`
+- If you get a 401 error, double-check that your Client ID and Secret are correct
 
 ---
 
-## Step 2: Create the `.env` file
-
-In the AthleteOS directory, create a file named `.env`:
-
-```
-STRAVA_CLIENT_ID=your_client_id_here
-STRAVA_CLIENT_SECRET=your_client_secret_here
-STRAVA_REFRESH_TOKEN=
-```
-
-Leave `STRAVA_REFRESH_TOKEN` empty — it will be filled in by the auth script.
-
-**Important:** `.env` is gitignored and never committed. Keep it private.
-
----
-
-## Step 3: Install Python dependencies
+## Step 2: Install Python dependencies
 
 ```bash
 pip install -r scripts/requirements.txt
@@ -47,28 +38,7 @@ Requires Python 3.8+.
 
 ---
 
-## Step 4: Run the Strava OAuth setup
-
-```bash
-python scripts/strava_auth.py
-```
-
-This will:
-1. Open your browser to Strava's authorization page
-2. Ask you to log in and grant access (scope: `activity:read_all`)
-3. Capture the authorization callback on `localhost:8080`
-4. Write your `STRAVA_REFRESH_TOKEN` to `.env`
-
-You should see: `Success! Authorized as: [Your Name]`
-
-**Troubleshooting:**
-- If the browser doesn't open, copy the URL printed to the terminal and open it manually
-- If port 8080 is in use, edit `CALLBACK_PORT` in `scripts/strava_auth.py` — and update your Strava app's callback domain to match
-- If you get a 401 error, double-check your Client ID and Client Secret in `.env`
-
----
-
-## Step 5: Test the connection
+## Step 3: Test the connection
 
 ```bash
 python scripts/fetch_activities.py --after 2026-02-01
@@ -78,7 +48,7 @@ You should see a JSON array of your recent Strava activities printed to the term
 
 ---
 
-## Step 6: Add your Hevy API key (optional)
+## Step 4: Add your Hevy API key (optional)
 
 If you have a **Hevy Pro** account, you can push workout routines directly to Hevy.
 
@@ -93,7 +63,7 @@ If you don't have Hevy Pro, skip this step — you can add it later via `/setup`
 
 ---
 
-## Step 7: Open Claude Code
+## Step 5: Open Claude Code
 
 ```bash
 cd /path/to/AthleteOS
@@ -110,7 +80,7 @@ This walks you through entering your FTP, HR zones, threshold pace, goals, and w
 
 ---
 
-## Step 8: Plan your first training block
+## Step 6: Plan your first training block
 
 ```
 /plan-workouts 7
@@ -174,7 +144,7 @@ Claude reads this file before every planning session.
 ## Troubleshooting
 
 **`STRAVA_REFRESH_TOKEN` error:**
-Re-run `python scripts/strava_auth.py`. Strava tokens are valid until you revoke access.
+Re-run `python3 scripts/strava_auth.py --client-id <CLIENT_ID> --client-secret <CLIENT_SECRET>` (get the credentials from whoever shared AthleteOS with you). Strava tokens are valid until you revoke access.
 
 **"No new activities" when you expect some:**
 Check `overview/strava-sync.json` — the `last_sync_timestamp` might be too recent. You can edit it to an earlier date to re-fetch.
