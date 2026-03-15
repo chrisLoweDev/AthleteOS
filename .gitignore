@@ -12,5 +12,6 @@ build/
 /workouts/reflections
 /workouts/completed
 /workouts/plans
-/athlete
-/journals
+/athlete/
+/journals/
+/overview/
