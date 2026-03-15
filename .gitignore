@@ -12,6 +12,8 @@ build/
 /workouts/reflections
 /workouts/completed
 /workouts/plans
-/athlete/
-/journals/
-/overview/
+/athlete
+/journals
+/overview
+journals/README.md
+*.md
