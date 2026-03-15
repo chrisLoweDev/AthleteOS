@@ -43,18 +43,30 @@ After collecting answers, fill in `athlete/profile.md` with the provided values,
 
 Compute training zones from the provided FTP and max HR and fill in the zone tables.
 
-### Step 3: Test Strava connectivity
+### Step 3: Test Strava connectivity and optional historical sync
 
 Run:
 ```
-python scripts/fetch_activities.py --after [30 days ago date in YYYY-MM-DD format]
+python3 scripts/fetch_activities.py --after [30 days ago date in YYYY-MM-DD format]
 ```
 
-- If it outputs a JSON array (even empty `[]`): report "Strava connection successful."
 - If it exits with an error: display the error message and guide the user:
   - Check that `.env` has `STRAVA_CLIENT_ID`, `STRAVA_CLIENT_SECRET`, and `STRAVA_REFRESH_TOKEN` set
   - If `STRAVA_REFRESH_TOKEN` is missing or empty: tell them to run `python scripts/strava_auth.py`
   - Refer them to `setup/SETUP.md` for step-by-step instructions
+  - Then proceed to Step 4.
+
+- If it succeeds (outputs a JSON array):
+  - Count the activities in the array. Report: "Strava connection successful — found X activities."
+  - If the array is empty (`[]`): note "No activities in the past 30 days." and proceed to Step 4.
+  - If the array is non-empty: ask the user:
+
+    > "I found X Strava activities from the past 30 days. Would you like me to sync them now to build a training history baseline? This will generate a weekly reflection and update your consistency log — useful context before your first /plan-workouts session.
+    >
+    > Y / N"
+
+  - If **N**: note "Strava connected. Historical sync skipped." and proceed to Step 4.
+  - If **Y**: run the full `/fetch-activities` workflow inline using the already-fetched activity JSON (do **not** re-run the fetch script — reuse the data from the successful call above). After the sync completes (reflection written, consistency log updated, `overview/strava-sync.json` updated, `overview/pending.md` regenerated), proceed to Step 4.
 
 ### Step 4: Hevy connectivity (optional)
 
