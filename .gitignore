@@ -9,11 +9,7 @@ venv/
 *.egg-info/
 dist/
 build/
-/workouts/reflections
-/workouts/completed
-/workouts/plans
 /athlete
 /journals
 /overview
-journals/README.md
-*.md
+/workouts
