@@ -10,9 +10,7 @@ venv/
 dist/
 build/
 /workouts/reflections
-overview/pending.md
-overview/strava-sync.json
 /workouts/completed
 /workouts/plans
-overview/journal-summary.md
+/athlete
 /journals
