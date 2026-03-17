@@ -9,13 +9,12 @@ venv/
 *.egg-info/
 dist/
 build/
-/workouts/reflections
-athlete/profile.md
+/athlete
 overview/pending.md
 overview/strava-sync.json
 athlete/consistency-log.md
-/workouts/completed
 /workouts/plans
+/workouts/completed
+/workouts/reflections
 /journals
-overview/journal-summary.md
 overview/journal-summary.md
