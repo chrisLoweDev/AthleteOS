@@ -3,15 +3,17 @@ One-time Strava OAuth setup for Athlete OS.
 
 Usage:
     python scripts/strava_auth.py
+    python scripts/strava_auth.py --client-id 12345 --client-secret abc123
 
 This script:
-1. Reads STRAVA_CLIENT_ID and STRAVA_CLIENT_SECRET from .env
+1. Reads STRAVA_CLIENT_ID and STRAVA_CLIENT_SECRET from args or .env
 2. Opens browser to Strava authorization page
 3. Starts a local HTTP server to capture the OAuth callback
 4. Exchanges the auth code for tokens
-5. Writes STRAVA_REFRESH_TOKEN to .env
+5. Writes STRAVA_CLIENT_ID, STRAVA_CLIENT_SECRET, and STRAVA_REFRESH_TOKEN to .env
 """
 
+import argparse
 import os
 import sys
 import webbrowser
@@ -72,14 +74,20 @@ class CallbackHandler(BaseHTTPRequestHandler):
 def main():
     global _auth_code
 
-    # Load credentials
+    parser = argparse.ArgumentParser(description='Strava OAuth setup for Athlete OS')
+    parser.add_argument('--client-id', help='Strava app Client ID (overrides .env)')
+    parser.add_argument('--client-secret', help='Strava app Client Secret (overrides .env)')
+    args = parser.parse_args()
+
+    # Load credentials: CLI args take priority, fall back to .env
     load_dotenv(dotenv_path=ENV_PATH)
-    client_id = os.getenv('STRAVA_CLIENT_ID')
-    client_secret = os.getenv('STRAVA_CLIENT_SECRET')
+    client_id = args.client_id or os.getenv('STRAVA_CLIENT_ID')
+    client_secret = args.client_secret or os.getenv('STRAVA_CLIENT_SECRET')
 
     if not client_id or not client_secret:
-        print("ERROR: STRAVA_CLIENT_ID and STRAVA_CLIENT_SECRET must be set in .env")
-        print(f"  .env path: {os.path.abspath(ENV_PATH)}")
+        print("ERROR: Strava Client ID and Secret are required.")
+        print("  Option A: python3 scripts/strava_auth.py --client-id <ID> --client-secret <SECRET>")
+        print("  Option B: set STRAVA_CLIENT_ID and STRAVA_CLIENT_SECRET in .env")
         sys.exit(1)
 
     # Build authorization URL
@@ -132,11 +140,13 @@ def main():
         print(json.dumps(data, indent=2))
         sys.exit(1)
 
-    # Write refresh token to .env
+    # Write all three credentials to .env (preserves other existing keys)
+    set_key(ENV_PATH, 'STRAVA_CLIENT_ID', client_id)
+    set_key(ENV_PATH, 'STRAVA_CLIENT_SECRET', client_secret)
     set_key(ENV_PATH, 'STRAVA_REFRESH_TOKEN', refresh_token)
 
     print(f"\nSuccess! Authorized as: {athlete_name or 'Unknown athlete'}")
-    print(f"Refresh token saved to .env")
+    print(f"Credentials saved to .env (CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN)")
     print("\nNext steps:")
     print("  1. Fill in athlete/profile.md with your FTP, HR zones, and goals")
     print("  2. Open Claude Code in this directory: claude")
