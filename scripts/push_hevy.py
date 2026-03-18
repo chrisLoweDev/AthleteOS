@@ -287,7 +287,9 @@ def main():
     if existing_id == "null":
         existing_id = None
 
-    title = fm.get("key_focus", os.path.basename(args.file)).strip('"')
+    key_focus = fm.get("key_focus", os.path.basename(args.file)).strip('"')
+    date_str = fm.get("date", "").strip()
+    title = f"{date_str} - {key_focus}" if date_str else key_focus
 
     main_rows = parse_table_rows(text, "Main Lifts")
     accessory_rows = parse_table_rows(text, "Accessory Work")
