@@ -33,8 +33,8 @@ Push planned weights sessions to Hevy as Routines.
 4. **Push each file**
    For each file:
    - Run: `python3 scripts/push_hevy.py <file_path>`
-   - **Exit 0, output is a routine ID** → edit the file's frontmatter: `hevy_routine_id: <id>`. Mark as pushed ✓
-   - **Output is "already pushed: <id>"** → skip, note as already done
+   - **Exit 0, output is a bare routine ID** → new routine created. Edit the file's frontmatter: `hevy_routine_id: <id>`. Mark as pushed ✓
+   - **Output starts with "updated: <id>"** → existing routine was updated in Hevy. No frontmatter change needed. Mark as updated ✓
    - **Exit 2** (no API key) → print the instructions from stderr and stop all remaining pushes
    - **Exit 3** (unknown exercise) → print the error from stderr and stop — check that the exercise name exactly matches an entry in `data/hevy-exercises.json`, or run `/sync-hevy-exercises` to refresh the cache
    - **Exit 4** (cache missing unexpectedly) → stop; run `python3 scripts/fetch_hevy_exercises.py` to recreate the cache
@@ -45,5 +45,5 @@ Push planned weights sessions to Hevy as Routines.
    File                                    Status
    --------------------------------------  --------------------
    2026-03-11-weights-full-body-a.md       ✓ pushed (abc12345)
-   2026-03-14-weights-full-body-b.md       ✓ pushed (def67890)
+   2026-03-18-weights-bench-row-core.md    ✓ updated (def67890)
    ```

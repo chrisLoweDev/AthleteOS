@@ -197,6 +197,7 @@ planned_distance_km: null
 week_folder: YYYY-WXX
 key_focus: "[Upper/Lower/Full Body] strength"
 strava_activity_id: null
+hevy_routine_id: null
 ---
 
 # [YYYY-MM-DD] Weights: [Session Name]
@@ -209,15 +210,22 @@ strava_activity_id: null
 
 ## Main Lifts
 
+**IMPORTANT FORMAT RULE — Hevy push compatibility:**
+Sets and Reps MUST be plain integers. Use one row per set group (warm-up sets on
+one row, working sets on another). Do NOT use compound strings like
+"2 warm-up + 5 working" or slash-separated values like "6 / 6 / 5 / 5 / 5".
+The "Warm-up sets" or "Working sets" note in the Notes column determines set type.
+
 | Exercise | Sets | Reps | Target Weight | Actual Weight | Notes |
 |----------|------|------|---------------|---------------|-------|
-| [Exercise] | [N] | [N] | [kg] | | |
+| [Exercise] | 2 | 6 | [warm-up kg] | | Warm-up sets |
+| [Exercise] | 5 | 5 | [working kg] | | Working sets |
 
 ## Accessory Work
 
-| Exercise | Sets | Reps | Target Weight |
-|----------|------|------|---------------|
-| [Exercise] | [N] | [N] | [kg] |
+| Exercise | Sets | Reps | Target Weight | Actual Weight |
+|----------|------|------|---------------|---------------|
+| [Exercise] | [N] | [N] | [kg] | |
 
 ## Cool Down
 - [Stretching/mobility]
