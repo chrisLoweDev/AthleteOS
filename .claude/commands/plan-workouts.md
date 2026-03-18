@@ -19,6 +19,8 @@ Read `athlete/profile.md`:
 
 Read `athlete/workout-library.md` for the standard weight training sessions, current working weights, and substitution rules. Always use these when scheduling weights sessions — do not invent exercises or weights from scratch.
 
+Read the `Strength Archetype:` field from `athlete/profile.md`. Look up the matching archetype ruleset in the `## Weight Training Archetypes` section of CLAUDE.md. Apply those programming variables to all weights sessions in this planning block.
+
 Read `data/hevy-exercises.json` if it exists:
 - Extract the set of exercise name keys from `exercises`
 - For weights sessions, **only use exercise names present as keys in the cache** — these are the exact names Hevy recognises
@@ -84,6 +86,7 @@ Based on the athlete's profile, recent load, fatigue level, and the planning con
 - Easy swimming (Z1/Z2) can follow any session. Do not schedule Z4/Z5 swim intervals on the same day as Z4+ cycling or heavy weights.
 - If athlete mentions a race within the window: apply taper in final 5–7 days (−40% volume, −20% intensity)
 - Respect the athlete's stated available days from `athlete/profile.md`
+- **Weights sessions (Athletic/Hybrid archetype):** Select the appropriate named routine from `workout-library.md` (alternate Full Body A / Full Body B unless context suggests otherwise — e.g., upper-only if legs needed fresh for a ride). Apply double progression: show current working weight from the library and note the rep target range. Always include the Mobility Close block — do not omit it. No heavy lower body (squat, hinge) within 48h before a Z4+ cycling session or long Z2 ride (>2hr). Never schedule weights on consecutive days.
 
 **Compute per-discipline session counts** based on available days and max weekly hours.
 

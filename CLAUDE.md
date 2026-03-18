@@ -164,6 +164,115 @@ CSS = Critical Swim Speed (sustainable pace for ~1500m effort, expressed as sec/
 
 ---
 
+## Weight Training Archetypes
+
+### Movement Pattern Framework
+
+Every weights session must balance across six movement patterns:
+
+| Pattern | Primary Muscles |
+|---------|----------------|
+| Squat (bilateral knee-dominant) | Quads, glutes, core |
+| Hinge (hip-dominant) | Hamstrings, glutes, erectors |
+| Horizontal Push | Pecs, anterior delts, triceps |
+| Horizontal Pull | Lats, rhomboids, biceps, rear delts |
+| Vertical Push | Delts, triceps, upper traps |
+| Vertical Pull | Lats, biceps, rear delts |
+| Core/Carry | Trunk, hip flexors, stabilisers |
+
+**Pull:Push balance rule:** At minimum 1:1 ratio per week (ideally 2:1 for shoulder health and cycling posture correction).
+
+### Five Archetypes
+
+#### Athletic/Hybrid ← Chris's current archetype
+For endurance athletes where weights support sport performance, not maximise strength.
+
+| Variable | Value |
+|----------|-------|
+| Session frequency | 2× per week, full-body (never split at this frequency) |
+| Sets per main lift | 3–5 (including warm-up sets) |
+| Reps per main lift | 4–8 |
+| Rest between sets | 2–3 min |
+| Accessory sets/reps | 2–3 sets × 8–15 reps |
+| Session duration | 60–80 min |
+| Progression model | Double progression: add reps first → add weight when top of range achieved across all working sets for 2 consecutive sessions |
+| Intensity ceiling | 85% estimated 1RM for working sets |
+| Deload | Every 4th week: reduce working weights 15%, maintain sets/reps |
+| Mobility close | 10 min — mandatory, not optional |
+
+**Scheduling constraints (Athletic/Hybrid):**
+- No heavy lower body (squat, hinge) within 48h before a Z4+ cycling session or long Z2 ride (>2hr)
+- Upper-body-focused sessions (bench, row, OHP, pull-up) have no cycling-day restriction
+- Z2 cycling the day after weights is permitted and encouraged (active recovery)
+- Maximum 2 weights sessions per week; never on consecutive days
+
+**Exercise selection priorities:**
+1. Barbell compounds first (highest adaptation per minute)
+2. Pull-up variations (sailing: pulling loads; bikepacking: overhead stability)
+3. Single-leg accessories (cycling is single-leg; split squats transfer directly)
+4. Anti-rotation and isometric core (boat stability, bike handling)
+5. Mobility drills as programmatic close — never ad hoc
+
+**Session structure template:**
+1. Warm-up (10 min): activation + primer for the day's primary patterns
+2. Primary compound: 4–5 sets including warm-ups
+3. Secondary compound: 3–4 working sets
+4. Tertiary compound or heavy accessory: 3 working sets
+5. Accessory block: 2–3 exercises, 2–3 sets × 8–15 reps, superset where possible
+6. Core: 1–2 exercises, 2–3 sets
+7. Mobility close: 10 min
+
+#### Strength (reference — for dedicated blocks)
+Max strength / powerlifting-adjacent.
+
+| Variable | Value |
+|----------|-------|
+| Sets/reps | 4–6 sets × 1–5 reps |
+| Rest | 3–5 min |
+| Frequency | 3–4×/week, upper/lower or push/pull/legs split acceptable |
+| Progression | Linear: add 2.5–5kg per week on main lifts |
+| Intensity | 85–97% 1RM |
+| Accessories | Minimal: 2–3 movements × 3 sets × 5–8 reps |
+| Scheduling note | Incompatible with high cycling volume — reduce to maintenance Z2 during a true strength block |
+
+#### Hypertrophy
+Muscle mass / bodybuilding-adjacent.
+
+| Variable | Value |
+|----------|-------|
+| Sets/reps | 3–5 sets × 8–15 reps |
+| Rest | 60–90 sec |
+| Frequency | 3–4×/week, push/pull/legs split preferred |
+| Progression | Volume: add sets before adding weight |
+| Intensity | 65–80% 1RM |
+| Accessories | High: 4–6 per session |
+| Scheduling note | Heavy lower-body hypertrophy within 48h of key cycling still restricted |
+
+#### Metabolic
+Lean/toned, caloric burn, work density.
+
+| Variable | Value |
+|----------|-------|
+| Sets/reps | 3–4 sets × 12–20 reps, circuit/superset format |
+| Rest | 30–60 sec |
+| Frequency | 2–3×/week |
+| Progression | Increase reps or reduce rest before adding load |
+| Intensity | 50–65% 1RM |
+| Scheduling note | Lower fatigue footprint — can sit adjacent to Z2 cycling |
+
+#### General Fitness
+Balanced, sustainable, beginner-friendly.
+
+| Variable | Value |
+|----------|-------|
+| Sets/reps | 2–4 sets × 10–15 reps |
+| Rest | 90 sec |
+| Frequency | 2–3×/week full-body |
+| Progression | Double progression |
+| Intensity | 60–75% 1RM |
+
+---
+
 ## Core Behaviors
 
 ### Comparing Planned vs Actual
@@ -180,6 +289,7 @@ CSS = Critical Swim Speed (sustainable pace for ~1500m effort, expressed as sec/
 - Z2 cycling can follow any session
 - Easy swimming (Z1/Z2) can follow any session — low musculoskeletal load. Avoid hard swim intervals (Z4/Z5) on the same day as a Z4+ cycling session or heavy weights.
 - If athlete mentions a race within the planning window: automatically apply taper (−40% volume, −20% intensity) in the final 5–7 days
+- **Weights scheduling (Athletic/Hybrid archetype):** No heavy lower body within 48h before a Z4+ cycling session or long Z2 ride (>2hr). Never schedule weights on consecutive days. Upper-body sessions have no cycling restriction.
 
 ### Pending Conflict Handling
 
