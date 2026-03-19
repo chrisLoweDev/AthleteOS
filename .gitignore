@@ -1,21 +1,24 @@
+# Credentials & secrets
 .env
 strava_token.txt
+
+# macOS
+.DS_Store
+
+# Python
 __pycache__/
 *.pyc
 *.pyo
 venv/
 .venv/
-.DS_Store
-*.egg-info/
-dist/
-build/
+
+# Athlete data — personal, auto-created by slash commands
 /athlete
-overview/pending.md
-overview/strava-sync.json
-athlete/consistency-log.md
 /workouts/plans
 /workouts/completed
 /workouts/reflections
 /journals
+overview/pending.md
+overview/strava-sync.json
 overview/journal-summary.md
 data/hevy-exercises.json
