@@ -293,12 +293,13 @@ def main():
 
     main_rows = parse_table_rows(text, "Main Lifts")
     accessory_rows = parse_table_rows(text, "Accessory Work")
+    core_rows = parse_table_rows(text, "Core")
 
-    if not main_rows and not accessory_rows:
+    if not main_rows and not accessory_rows and not core_rows:
         print("ERROR: No exercise tables found in file.", file=sys.stderr)
         sys.exit(1)
 
-    exercises = build_exercises(main_rows, accessory_rows)
+    exercises = build_exercises(main_rows, accessory_rows + core_rows)
 
     payload = {
         "routine": {
