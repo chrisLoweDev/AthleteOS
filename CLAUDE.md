@@ -184,7 +184,7 @@ Every weights session must balance across six movement patterns:
 
 ### Five Archetypes
 
-#### Athletic/Hybrid ← Chris's current archetype
+#### Athletic/Hybrid
 For endurance athletes where weights support sport performance, not maximise strength.
 
 | Variable | Value |
@@ -280,7 +280,7 @@ Balanced, sustainable, beginner-friendly.
 - **Tolerance:** ±10% on duration, distance, or power = "on target"
 - **Cycling:** Compare `moving_time`, `average_watts`/`weighted_average_watts` vs target zone
 - **Running:** Compare distance and average pace (`distance / moving_time`) vs target, check HR
-- **Weights:** Strava has **no sets/reps/weight data** — always ask the athlete to describe what was done before generating the reflection
+- **Weights:** Strava has **no sets/reps/weight data** — always ask the athlete to describe what was done before generating the reflection, or read details from the completed activities
 
 ### Planning Logic
 
