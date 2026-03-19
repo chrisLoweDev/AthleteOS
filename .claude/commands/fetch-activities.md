@@ -99,6 +99,54 @@ New PRs this session: [list, or "none"]
 No new PRs: [brief reason per exercise where attempted]
 ```
 
+### Step 5b: Update working weights (weight training sessions only)
+
+Skip this step if no weight training activities were processed in Step 5.
+
+**5b-1: Read the workout library**
+
+Read `athlete/workout-library.md`. If the file does not exist or is empty, skip this step and add a note to the reflection: "Workout library not found — working weights not updated. Run /setup to generate it."
+
+**5b-2: Identify the routine**
+
+For each completed weights session processed in Step 5:
+- Identify which named routine it corresponds to (Full Body A or Full Body B) by checking the workout file's `key_focus` frontmatter field or filename slug
+- If the routine cannot be determined, note it and skip progression checks for that session
+
+**5b-3: Extract actual weights and reps**
+
+From the athlete's Step 5 response and the completed workout file's tables:
+- For each main lift, extract: exercise name, weight used, reps completed per set, number of sets
+
+**5b-4: Double progression check**
+
+For each main lift in the routine:
+1. Did the athlete hit the **top of the working rep range** on **all working sets** in this session?
+   - Working rep range is defined in the library's Main Lifts table (e.g., "4–8" means top is 8)
+   - All working sets must hit the top number (warm-up sets excluded)
+2. If yes for this session: glob `workouts/completed/**/` for the most recent prior file matching the same routine type (same Full Body A or Full Body B slug), sorted by date descending
+   - Read that file and check whether the same exercise also hit the top of the rep range on all working sets
+3. **Two consecutive sessions both at top of range → progression triggered:**
+   - Increment that exercise's Target Weight in `athlete/workout-library.md` by **2.5 kg** (not 5 kg — conservative for Athletic/Hybrid archetype)
+   - Add a note next to the updated weight: `(progressed [date])`
+4. **Only one session qualifies:** no change to the library, but record a "near-progression" note for the reflection: "One more qualifying session at [weight] → triggers progression to [weight + 2.5 kg]"
+5. **Neither session qualifies:** no change, no note needed
+
+**5b-5: Update library header**
+
+After processing all exercises, update the `**Working weights last updated:**` line in `athlete/workout-library.md` to today's date.
+
+**5b-6: Compile progression summary**
+
+Record for use in Step 6:
+```
+Weight progressions this sync:
+  Triggered: [exercise → old weight → new weight, or "none"]
+  Near-progressions: [exercise → current weight → next target, or "none"]
+```
+
+---
+
 ### Step 6: Generate weekly reflection
 
 Determine the ISO week(s) of the fetched activities. Create a reflection file for each week involved: `workouts/reflections/YYYY-WXX-reflection.md`
@@ -134,6 +182,9 @@ _Generated: [today's date]_
 [Insert athlete's responses from Step 5]
 
 **Strength PRs:** [Insert Step 5a PR summary — "New PRs: ..." or "No new PRs this session"]
+
+### Strength Progression
+[Insert Step 5b progression summary — triggered progressions and near-progressions, or omit section if no weight training this week]
 
 ## Observations
 [3-5 bullet points: patterns, trends, what went well, what to watch]

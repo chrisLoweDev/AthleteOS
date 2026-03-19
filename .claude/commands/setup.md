@@ -64,6 +64,117 @@ After collecting all answers, fill in `athlete/profile.md` with the provided val
 
 Compute training zones from the provided FTP and max HR (for selected disciplines) and fill in the zone tables.
 
+### Step 2.5: Generate workout library (weight training only)
+
+Skip this step if weight training was **not** selected in Step 2.
+
+**2.5-1: Load sources**
+- Read `athlete/profile.md` — get: archetype, gym setup, available equipment, exercise preferences/exclusions
+- Read `data/hevy-exercises.json` if it exists — use only exercise names present as keys when referencing Hevy-compatible exercises
+  - If the file does not exist: warn inline: "Exercise cache not found — generating library with placeholder exercise names. Run /sync-hevy-exercises and verify names before /push-workouts."
+- The archetype ruleset and session structure template are defined in CLAUDE.md under "Weight Training Archetypes" — apply the matching archetype's rules
+
+**2.5-2: Derive available movement patterns from equipment**
+
+Before generating any routines, map the athlete's available equipment (from `profile.md`) to the movement patterns it supports:
+
+| Equipment present | Movement patterns unlocked |
+|---|---|
+| Barbell + rack | Squat, Hinge, H-Push (bench), H-Pull (row), V-Push (OHP) |
+| Pull-up bar / rig | V-Pull |
+| Dumbbells | H-Push, H-Pull, V-Push, Hinge (RDL), Squat (goblet) — reduced loading ceiling |
+| Cable machine | H-Pull, V-Pull, H-Push (cable), core |
+| Resistance bands only | H-Pull (face pull), V-Pull (lat pulldown band), limited H-Push |
+| Bodyweight only | V-Pull (if bar available), Squat (BW), Hinge (glute bridge), Core |
+
+Note any movement patterns the athlete cannot train with available equipment. If a pattern is missing entirely (e.g., no vertical pull option at all), flag it: "No vertical pull option available with current equipment — lat development will be limited. Consider adding a pull-up bar or cable attachment."
+
+Also apply any exclusions from the athlete's "Exercise Preferences & Exclusions" field — treat excluded exercises as unavailable and substitute at this stage.
+
+**2.5-3: Generate routines — number and structure by archetype**
+
+The number of routines and session structure varies by archetype:
+
+| Archetype | Frequency | Split | Routines to generate |
+|---|---|---|---|
+| Athletic/Hybrid | 2×/week | Full body (never split at this frequency) | Full Body A, Full Body B |
+| Strength | 3–4×/week | Upper/Lower preferred; PPL acceptable | Upper A, Upper B, Lower A, Lower B (or Push, Pull, Legs if PPL) |
+| Hypertrophy | 3–4×/week | Push/Pull/Legs preferred | Push, Pull, Legs |
+| Metabolic | 2–3×/week | Circuit format | Circuit A (lower-focus), Circuit B (upper-focus); add Circuit C (full body) if 3×/week |
+| General Fitness | 2–3×/week | Full body | Full Body A, Full Body B; add Full Body C if 3×/week |
+
+For each archetype, use only the movement patterns available from the equipment audit above. Map patterns to routines as follows:
+
+**Athletic/Hybrid:**
+- Full Body A — Squat primary / Horizontal Push / Horizontal Pull
+- Full Body B — Hinge primary / Vertical Push / Vertical Pull
+
+**Strength (Upper/Lower):**
+- Upper A — Horizontal Push primary / Horizontal Pull
+- Upper B — Vertical Push primary / Vertical Pull
+- Lower A — Squat primary + accessory hinge
+- Lower B — Hinge primary (deadlift) + accessory squat
+
+**Strength (PPL):**
+- Push — Horizontal Push + Vertical Push (chest/shoulder/tricep)
+- Pull — Horizontal Pull + Vertical Pull (back/bicep)
+- Legs — Squat + Hinge (quad/hamstring/glute)
+
+**Hypertrophy:**
+- Push — Horizontal Push + Vertical Push, higher volume (3–5 sets × 8–15 reps)
+- Pull — Horizontal Pull + Vertical Pull, higher volume
+- Legs — Squat + Hinge, higher volume
+
+**Metabolic:**
+- Circuit A — Lower-focus: Squat, Hinge, single-leg, core in superset/circuit format (30–60 sec rest)
+- Circuit B — Upper-focus: H-Push, H-Pull, V-Push, V-Pull in superset/circuit format
+- Circuit C (if 3×/week) — Full body: mixed patterns, AMRAP or timed sets
+
+**General Fitness:**
+- Full Body A — Squat + Horizontal Push + Horizontal Pull + Core
+- Full Body B — Hinge + Vertical Push + Vertical Pull + Core
+- Full Body C (if 3×/week) — Full body, varied exercise selection from A/B substitutions
+
+If the athlete's available equipment prevents a full pattern from being programmed in a given routine, note it in that routine's Substitutions section and skip the missing pattern rather than inventing an exercise that requires unavailable equipment.
+
+**2.5-4: Section structure for each routine**
+
+Each routine must include all five sections:
+
+1. **Warm Up** — activation drills appropriate for the day's primary patterns (5–10 min)
+2. **Main Lifts** — table with columns: Exercise | Sets | Reps | Target Weight | Notes
+3. **Accessory Work** — table with columns: Exercise | Sets | Reps | Target Weight | Notes
+4. **Core** — table with columns: Exercise | Sets | Duration/Reps | Notes
+5. **Mobility Close** — 10 min, listed as bullet drills relevant to the session's movement patterns
+6. **Substitutions** — bullet list of swap options for each main lift (equipment or preference alternatives)
+
+**2.5-5: Working weights**
+
+Start conservative:
+- Main barbell lifts: ~60% of estimated 1RM (use bodyweight and archetype as reference — if no 1RM data exists, use beginner-appropriate starting weights and note this)
+- Pull-ups and split squats: bodyweight (no added load)
+- Add a note in the library header: "Starting weights are conservative estimates. Update after first 1–2 sessions."
+
+**2.5-6: Write the library**
+
+Write the completed library to `athlete/workout-library.md`, replacing any existing content. Use this header format:
+
+```markdown
+# Workout Library
+
+**Archetype:** [archetype name]
+**Working weights last updated:** [today's date]
+**Note:** Starting weights are conservative estimates. Update after first 1–2 sessions.
+
+---
+```
+
+Write each routine under a `##` heading matching its name (e.g., `## Full Body A`, `## Upper A`, `## Push`).
+
+Confirm: "Workout library generated: [list routine names] written to athlete/workout-library.md"
+
+---
+
 ### Step 3: Test Strava connectivity and optional historical sync
 
 Run:
