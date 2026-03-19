@@ -31,14 +31,21 @@ Install Python dependencies:
 pip install -r scripts/requirements.txt
 ```
 
-Create a `.env` file in the project root:
+Create a `.env` file in the project root. You will receive the Strava API credentials directly from the project owner — paste them in as shown:
 
 ```env
-STRAVA_CLIENT_ID=your_client_id
-STRAVA_CLIENT_SECRET=your_client_secret
-STRAVA_REFRESH_TOKEN=your_refresh_token
+STRAVA_CLIENT_ID=provided_by_owner
+STRAVA_CLIENT_SECRET=provided_by_owner
 HEVY_API_KEY=your_hevy_api_key   # optional
 ```
+
+Then run the one-time OAuth flow to authorize your personal Strava account and generate your refresh token:
+
+```bash
+python3 scripts/strava_auth.py
+```
+
+This opens a Strava authorization page in your browser. After you approve access, your `STRAVA_REFRESH_TOKEN` is saved to `.env` automatically. You only need to do this once.
 
 ---
 
@@ -262,15 +269,15 @@ AthleteOS enforces a **polarized model**: the majority of training volume sits i
 
 ## Strava Setup
 
-Run the one-time OAuth flow:
+Once you have the Strava API credentials in your `.env` (provided by the project owner), authorize your personal Strava account once:
 
 ```bash
 python3 scripts/strava_auth.py
 ```
 
-This starts a local server on port 8000, opens the Strava authorization page, and saves your credentials to `.env`. You only need to do this once — the refresh token is automatically rotated on every fetch.
+This starts a local server on port 8000, opens the Strava authorization page in your browser, and writes your `STRAVA_REFRESH_TOKEN` to `.env` automatically. The refresh token is rotated on every subsequent fetch — you only need to run this once.
 
-If auth fails during a `/fetch-activities` run, re-run `strava_auth.py`.
+If auth fails during a `/fetch-activities` run, re-run `python3 scripts/strava_auth.py`.
 
 ---
 
