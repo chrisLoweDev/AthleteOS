@@ -4,11 +4,11 @@ _Extensible library of named strength routines for use by `/plan-workouts`. When
 
 > **Important:** Exercise names in this library must exactly match entries in `data/hevy-exercises.json`. If you add a new exercise, verify the name against the cache (or run `/sync-hevy-exercises` then search the JSON) before adding it here — a mismatch will cause `/push-workouts` to fail with exit code 3.
 
-**Archetype:** Athletic/Hybrid — full-body sessions, 2× per week, double progression model.
+**Archetype:** Set during `/setup` and stored in `athlete/profile.md`. The example sessions below follow the Athletic/Hybrid template (full-body, 2×/week, double progression) — update or replace them to match your archetype if different.
 
-**Equipment note:** Chris has no dumbbells. All exercises use barbell, EZ bar, pull-up bar, or bands only. No dumbbell exercises.
+**Equipment note:** Update this to reflect your available equipment. The default library uses barbell, EZ bar, pull-up bar, and bands. Substitute accordingly if your setup differs.
 
-**Working weights last updated:** 2026-03-16
+**Working weights last updated:** —
 
 ---
 
@@ -30,9 +30,9 @@ _Extensible library of named strength routines for use by `/plan-workouts`. When
 
 | Exercise | Warm-Up Sets | Working Sets | Reps | Working Weight | Notes |
 |----------|-------------|--------------|------|----------------|-------|
-| Squat (Barbell) | 2 (40kg×8, 60kg×5) | 3 | 4–8 | 80kg | Double progression: add reps → add 5kg when 3×8 achieved 2 sessions in a row |
-| Bench Press (Barbell) | 1 (50kg×5) | 3 | 4–8 | 80kg | Double progression: same rule |
-| Bent Over Row (Barbell) | 1 (50kg×5) | 3 | 4–8 | 70kg | Overhand grip; brace hard; keep back flat |
+| Squat (Barbell) | 2 | 3 | 4–8 | — kg | Double progression: add reps → add 5kg when 3×8 achieved 2 sessions in a row |
+| Bench Press (Barbell) | 1 | 3 | 4–8 | — kg | Double progression: same rule |
+| Bent Over Row (Barbell) | 1 | 3 | 4–8 | — kg | Overhand grip; brace hard; keep back flat |
 | Pull Up | — | 3 | max (target 5–9) | BW | Rest 2–3 min; note reps per set |
 
 _Rest 2–3 min between working sets on all main lifts._
@@ -49,7 +49,7 @@ _Rest 2–3 min between working sets on all main lifts._
 | Exercise | Sets | Reps | Weight | Notes |
 |----------|------|------|--------|-------|
 | Back Extension (Hyperextension) | 2 | 12 | BW | Controlled; squeeze glutes at top |
-| Bench Press - Close Grip (Barbell) | 2 | 10–12 | 50–60kg | Tricep emphasis; elbows tucked |
+| Bench Press - Close Grip (Barbell) | 2 | 10–12 | — kg | Tricep emphasis; elbows tucked |
 
 ### Core Block
 
@@ -95,8 +95,8 @@ _Rest 2–3 min between working sets on all main lifts._
 
 | Exercise | Warm-Up Sets | Working Sets | Reps | Working Weight | Notes |
 |----------|-------------|--------------|------|----------------|-------|
-| Romanian Deadlift (Barbell) | 2 (50kg×8, 65kg×5) | 3 | 4–8 | 80kg | Hinge at hips; feel hamstring stretch; keep bar close |
-| Overhead Press (Barbell) | 2 (30kg×8, 40kg×5) | 3 | 4–8 | 50kg | Brace core; no lumbar hyperextension; press straight up |
+| Romanian Deadlift (Barbell) | 2 | 3 | 4–8 | — kg | Hinge at hips; feel hamstring stretch; keep bar close |
+| Overhead Press (Barbell) | 2 | 3 | 4–8 | — kg | Brace core; no lumbar hyperextension; press straight up |
 | Pull Up | — | 3 | max (target 5–9) | BW | Note reps per set; use band assist if needed |
 
 _Rest 2–3 min between working sets on all main lifts._
