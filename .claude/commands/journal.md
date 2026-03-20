@@ -50,7 +50,7 @@ Ask all questions in a single prompt:
 How are you doing right now? Answer each:
 
 1. Energy (1–5): 1 = completely depleted, 5 = excellent
-2. Fatigue (1–5): 1 = fresh/recovered, 5 = very fatigued/heavy legs
+2. Fatigue (1–5): 1 = very fatigued/heavy legs, 5 = fresh/recovered
 3. Mood (1–5): 1 = low/flat, 5 = great
 4. Stress (1–5): 1 = calm, 5 = high stress
 5. Sleep last night (hours): e.g. 7.5
@@ -126,12 +126,12 @@ Apply the following rules to the collected data. Evaluate all signals, then comb
 
 | Signal | Threshold | Proposed Adjustment |
 |--------|-----------|---------------------|
-| Fatigue | ≥ 4 | Shorten next hard session (Z3+) 20%, drop intensity one zone |
+| Fatigue | ≤ 2 | Shorten next hard session (Z3+) 20%, drop intensity one zone |
 | Energy | ≤ 2 | Swap next quality session to Z2 equivalent, or defer next weights session |
 | Stress | ≥ 4 | Scale remaining week volume −20% across all pending sessions |
 | Sleep | < 6h | Treat as Fatigue ≥ 4 (same rule) |
 | Soreness (specific area) | any | Flag next session loading that area; propose modification or substitution |
-| Fatigue ≥ 4 AND Energy ≤ 2 | combined | Propose inserting a rest day; archive next pending session |
+| Fatigue ≤ 2 AND Energy ≤ 2 | combined | Propose inserting a rest day; archive next pending session |
 
 **Hard session definition:** cycling sessions with Z3+ main set, running with Z3+ pace target, or any weights session.
 
@@ -143,7 +143,7 @@ Identify the specific pending session(s) affected. State which signal triggered 
 
 ```
 Signals detected:
-- Fatigue: [value]/5 → next hard session should be shortened and dropped one zone
+- Fatigue: [value]/5 (low = fatigued) → next hard session should be shortened and dropped one zone
 - Sleep: [value]h → treated as high fatigue (same rule)
 
 Proposed adjustment:
