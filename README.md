@@ -35,17 +35,23 @@ pip install -r scripts/requirements.txt
 
 ## Getting Started
 
+**Step 0 - Launch Claude Code**
+Open up a terminal and navigate to the folder where this project lives. Type `claude` to launch Claude Code
+
 **Step 1 — Run `/setup`**
 First-time onboarding. Builds your athlete profile (FTP, threshold pace, HR zones, availability, goals) and tests Strava and Hevy connectivity.
 
 **Step 2 — Run `/plan-workouts`**
 Dialog-based session planning. Reads your profile and any pending sessions, then generates a week of structured workouts as markdown files.
 
-**Step 3 — Train. After each week, run `/fetch-activities`**
+**Step 3 — Train. After each week (or activity), run `/fetch-activities`**
 Pulls Strava data, matches activities to planned sessions, marks them completed or missed, and generates a reflection.
 
 **Step 4 — Run `/review` weekly**
 The full weekly ritual: syncs Strava, writes a narrative coaching summary, and offers to kick off next-week planning.
+
+**Step 5 (optional) - Reflect. Before/After activities, run `/journal`**
+Journaling is your chance to reflect on how you're feeling, which with then be considered in future planning and reflections.
 
 ---
 
