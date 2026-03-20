@@ -31,22 +31,6 @@ Install Python dependencies:
 pip install -r scripts/requirements.txt
 ```
 
-Create a `.env` file in the project root. You will receive the Strava API credentials directly from the project owner — paste them in as shown:
-
-```env
-STRAVA_CLIENT_ID=provided_by_owner
-STRAVA_CLIENT_SECRET=provided_by_owner
-HEVY_API_KEY=your_hevy_api_key   # optional
-```
-
-Then run the one-time OAuth flow to authorize your personal Strava account and generate your refresh token:
-
-```bash
-python3 scripts/strava_auth.py
-```
-
-This opens a Strava authorization page in your browser. After you approve access, your `STRAVA_REFRESH_TOKEN` is saved to `.env` automatically. You only need to do this once.
-
 ---
 
 ## Getting Started
