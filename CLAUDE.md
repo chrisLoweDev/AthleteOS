@@ -93,7 +93,7 @@ time: HH:MM          # optional, if athlete provides it
 session_ref: null    # or relative path to linked workout file
 context: pre-session | post-session | general
 energy: 3            # 1=depleted → 5=excellent
-fatigue: 2           # 1=fresh → 5=very fatigued
+fatigue: 2           # 1=very fatigued → 5=fresh
 mood: 4
 stress: 2
 sleep_hours: 7.5
