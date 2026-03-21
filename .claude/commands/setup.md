@@ -177,18 +177,29 @@ Confirm: "Workout library generated: [list routine names] written to athlete/wor
 
 ### Step 3: Test Strava connectivity and optional historical sync
 
-Run:
+Before running the fetch, check whether `.env` contains all three Strava keys (`STRAVA_CLIENT_ID`, `STRAVA_CLIENT_SECRET`, `STRAVA_REFRESH_TOKEN`):
+
+- If any of the three keys are missing or `.env` doesn't exist: prompt the user for all three values before running the fetch. Say:
+  > "Strava isn't connected yet. You'll need to create a free Strava API app — it takes about 2 minutes:
+  >
+  > 1. Go to https://www.strava.com/settings/api (log in if prompted)
+  > 2. Fill in: Application Name (anything), Category (any), Website (`http://localhost`), Authorization Callback Domain: `localhost`
+  > 3. Click **Create**
+  > 4. On the same page, find your **Client ID**, **Client Secret**, and **Your Refresh Token**
+  > 5. Paste all three here and I'll set up your `.env` file."
+  - Once the user provides all three values, write them to `.env` (create the file if it doesn't exist):
+    - `STRAVA_CLIENT_ID`
+    - `STRAVA_CLIENT_SECRET`
+    - `STRAVA_REFRESH_TOKEN`
+
+Once `.env` has all three keys, run:
 ```
 python3 scripts/fetch_activities.py --after [30 days ago date in YYYY-MM-DD format]
 ```
 
 - If it exits with an error: display the error message, then handle as follows:
-  - If `STRAVA_REFRESH_TOKEN` is missing, invalid, or the error mentions auth/credentials: offer to run the authorization for them. Say something like:
-    > "Strava isn't authorized yet. I can run the authorization flow for you — a browser window will open and you'll just click Authorize on Strava's site. To do this, I'll need your AthleteOS Client ID and Client Secret (provided by whoever shared this with you). Paste them here and I'll take care of the rest."
-  - Once the user provides the CLIENT_ID and CLIENT_SECRET, run: `python3 scripts/strava_auth.py --client-id <CLIENT_ID> --client-secret <CLIENT_SECRET>`
-  - On success: confirm "Strava authorized as [name]. Credentials saved." and re-run the fetch to confirm connectivity before proceeding to Step 4.
-  - On failure: display the error and refer them to `setup/SETUP.md` Step 1 for troubleshooting.
-  - Do **not** tell the user to register their own Strava API app.
+  - If the error mentions auth/credentials: ask the user to double-check all three values at https://www.strava.com/settings/api, update `.env`, and retry.
+  - On failure after correcting credentials: display the error and ask the user to verify their Strava API app is correctly configured.
   - Then proceed to Step 4.
 
 - If it succeeds (outputs a JSON array):
