@@ -179,18 +179,36 @@ Confirm: "Workout library generated: [list routine names] written to athlete/wor
 
 Before running the fetch, check whether `.env` contains all three Strava keys (`STRAVA_CLIENT_ID`, `STRAVA_CLIENT_SECRET`, `STRAVA_REFRESH_TOKEN`):
 
-- If any of the three keys are missing or `.env` doesn't exist: prompt the user for all three values before running the fetch. Say:
-  > "Strava isn't connected yet. You'll need to create a free Strava API app — it takes about 2 minutes:
-  >
-  > 1. Go to https://www.strava.com/settings/api (log in if prompted)
-  > 2. Fill in: Application Name (anything), Category (any), Website (`http://localhost`), Authorization Callback Domain: `localhost`
-  > 3. Click **Create**
-  > 4. On the same page, find your **Client ID**, **Client Secret**, and **Your Refresh Token**
-  > 5. Paste all three here and I'll set up your `.env` file."
-  - Once the user provides all three values, write them to `.env` (create the file if it doesn't exist):
-    - `STRAVA_CLIENT_ID`
-    - `STRAVA_CLIENT_SECRET`
-    - `STRAVA_REFRESH_TOKEN`
+**If `STRAVA_CLIENT_ID` or `STRAVA_CLIENT_SECRET` are missing:**
+
+Say:
+> "Strava isn't connected yet. You'll need to create a free Strava API app — it takes about 2 minutes:
+>
+> 1. Go to https://www.strava.com/settings/api (log in if prompted)
+> 2. Fill in: Application Name (anything), Category (any), Website (`http://localhost`), Authorization Callback Domain: `localhost`
+> 3. Click **Create**
+> 4. On the same page, find your **Client ID** and **Client Secret**
+> 5. Paste both here and I'll set up your `.env` file."
+
+Once the user provides the Client ID and Secret, write them to `.env`:
+- `STRAVA_CLIENT_ID`
+- `STRAVA_CLIENT_SECRET`
+
+**If `STRAVA_REFRESH_TOKEN` is missing (or after writing Client ID + Secret above):**
+
+Tell the user:
+> "Now I'll open the Strava authorization page in your browser. Approve access, then come back here — the token will be saved automatically."
+
+Run:
+```
+python3 scripts/strava_auth.py
+```
+
+Wait for the script to complete. It opens a browser, captures the OAuth callback on port 8080, and writes `STRAVA_REFRESH_TOKEN` to `.env` automatically. Do not ask the user to paste a token — the script handles everything.
+
+If the script exits with an error, display the error and ask the user to verify their Strava app has Authorization Callback Domain set to `localhost`.
+
+**Note:** Do not ask the user to copy a refresh token from the Strava settings page. The token shown there has insufficient scope (`read` only) and cannot be used to fetch activities. The OAuth flow via `strava_auth.py` is the only supported method.
 
 Once `.env` has all three keys, run:
 ```
@@ -198,8 +216,8 @@ python3 scripts/fetch_activities.py --after [30 days ago date in YYYY-MM-DD form
 ```
 
 - If it exits with an error: display the error message, then handle as follows:
-  - If the error mentions auth/credentials: ask the user to double-check all three values at https://www.strava.com/settings/api, update `.env`, and retry.
-  - On failure after correcting credentials: display the error and ask the user to verify their Strava API app is correctly configured.
+  - If the error mentions auth/credentials: tell the user to re-run `python3 scripts/strava_auth.py` to refresh the token, then retry.
+  - On failure after re-auth: display the error and ask the user to verify their Strava API app has Authorization Callback Domain set to `localhost`.
   - Then proceed to Step 4.
 
 - If it succeeds (outputs a JSON array):
