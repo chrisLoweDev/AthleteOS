@@ -259,7 +259,7 @@ AthleteOS enforces a **polarized model**: the majority of training volume sits i
 
 ## Strava Setup
 
-Each user needs their own Strava API application. All three credentials you need are available in one place — no OAuth flow required.
+Each user needs their own Strava API application. Setup takes about 5 minutes and requires a one-time browser OAuth login.
 
 ### Step 1 — Create your Strava API app
 
@@ -271,17 +271,23 @@ Each user needs their own Strava API application. All three credentials you need
    - **Website:** `http://localhost` (a placeholder is fine)
    - **Authorization Callback Domain:** `localhost`
 3. Click **Create**
+4. Note your **Client ID** and **Client Secret** from the settings page
 
-### Step 2 — Note your credentials
+### Step 2 — Run the OAuth setup script
 
-On the same settings page you'll find:
-- **Client ID**
-- **Client Secret**
-- **Your Refresh Token** (listed under "Your Access Token" — use the refresh token value)
+```bash
+python3 scripts/strava_auth.py --client-id YOUR_CLIENT_ID --client-secret YOUR_CLIENT_SECRET
+```
+
+This will:
+1. Open a browser window to Strava's authorization page
+2. Ask you to log in and grant read access
+3. Capture the OAuth callback on `localhost:8080`
+4. Write `STRAVA_CLIENT_ID`, `STRAVA_CLIENT_SECRET`, and `STRAVA_REFRESH_TOKEN` to your `.env` file automatically
 
 ### Step 3 — Run `/setup`
 
-Run `/setup` in Claude Code. When it reaches the Strava step, paste your Client ID, Client Secret, and Refresh Token when prompted — the setup command will create your `.env` file automatically.
+Run `/setup` in Claude Code to complete athlete profile creation. Strava connectivity will be tested automatically using the credentials saved by the script above.
 
 ---
 
