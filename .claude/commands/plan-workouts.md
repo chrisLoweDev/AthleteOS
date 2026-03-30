@@ -16,6 +16,7 @@ Read `athlete/profile.md`:
 - Current goals
 - Weekly availability (available days + max hours)
 - Any notes (injuries, upcoming events)
+- `coaching_mode` (default: `coach` if missing) — apply mode tone to session annotations and any advice embedded in workout files
 
 Read `athlete/workout-library.md` for the standard weight training sessions, current working weights, and substitution rules. Always use these when scheduling weights sessions — do not invent exercises or weights from scratch.
 
@@ -27,6 +28,8 @@ Read `data/hevy-exercises.json` if it exists:
 - If the cache is missing, warn: "data/hevy-exercises.json not found — using workout-library names only. Run /sync-hevy-exercises before pushing to Hevy."
 
 Read `overview/strava-sync.json` to understand recent training history.
+
+Read `athlete/consistency-log.md` to understand the 12-week volume trend across disciplines. Note any patterns (e.g. declining cycling volume, missed weeks) that should influence load targets or session counts in the new plan.
 
 Read the most recent file in `workouts/reflections/` for current fitness context and recent load.
 

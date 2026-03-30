@@ -10,7 +10,7 @@ Read `overview/strava-sync.json`. Note:
 - `last_sync_timestamp`: the ISO 8601 datetime of the last successful sync (null if first run)
 - `seen_ids`: array of Strava activity IDs already processed
 
-Read `athlete/profile.md`. Load FTP, HR zones, threshold pace.
+Read `athlete/profile.md`. Load FTP, HR zones, threshold pace, and `coaching_mode` (default: `coach` if missing).
 
 If `last_sync_timestamp` is null (first sync): ask the athlete "How far back should I look for activities? (e.g., 30 days, 90 days)" and compute the `--after` date from their answer.
 
@@ -151,6 +151,14 @@ Weight progressions this sync:
 
 Determine the ISO week(s) of the fetched activities. Create a reflection file for each week involved: `workouts/reflections/YYYY-WXX-reflection.md`
 
+**Adherence calculation:** Before writing the reflection, compute:
+- Sessions planned (all pending files for this week at sync time)
+- Sessions completed within ±10% tolerance of planned duration/distance
+- Adherence = completed / planned, expressed as X/Y (Z%)
+- Note any specific shortfalls (e.g., "Long ride: 84 min of 135 planned, 62%")
+
+**Coaching tone:** Apply `coaching_mode` from profile.md to all narrative sections (Observations, Fitness Trajectory, Recommendation). The Session Analysis Notes per session should also reflect the mode. Mode definitions are in CLAUDE.md under Core Behaviors → Coaching Mode.
+
 Reflection structure:
 ```markdown
 # Week YYYY-WXX Reflection
@@ -160,6 +168,7 @@ _Generated: [today's date]_
 ## Summary
 - **Total sessions:** [N]
 - **Total time:** [Xh Ym]
+- **Plan Adherence:** [X/Y sessions (Z%)] — [brief note on shortfalls, or "all sessions on target"]
 - **Disciplines:** [Cycling: Xh | Running: Y km | Swimming: Z m | Weights: N sessions]
 
 ## Session Analysis
@@ -168,7 +177,7 @@ _Generated: [today's date]_
 - **Planned:** [duration/distance/intensity from plan file]
 - **Actual:** [duration/distance/avg power or pace/avg HR from Strava]
 - **Result:** [on target / over / under] (±10% tolerance)
-- **Notes:** [AI coaching observation — 1-2 sentences]
+- **Notes:** [AI coaching observation — 1-2 sentences, tone per coaching_mode]
 
 [Repeat for each matched pair]
 
@@ -187,13 +196,16 @@ _Generated: [today's date]_
 [Insert Step 5b progression summary — triggered progressions and near-progressions, or omit section if no weight training this week]
 
 ## Observations
-[3-5 bullet points: patterns, trends, what went well, what to watch]
+[3-5 bullet points: patterns, trends, what went well, what to watch — tone per coaching_mode]
 
 ## Fitness Trajectory
-[Based on consistency-log: is load trending up/down/stable?]
+[Based on consistency-log: is load trending up/down/stable? — tone per coaching_mode]
+
+## Goal Trajectory
+[Only include if Performance Targets are defined in athlete/profile.md. For each target: current status vs goal, gap, and whether on track. In accountability mode, name the gap plainly.]
 
 ## Recommendation for Coming Week
-[One concrete suggestion based on this week's data]
+[One concrete suggestion based on this week's data — tone per coaching_mode]
 ```
 
 If a reflection file already exists for a week (from a previous partial sync), append a new dated section rather than overwriting.
@@ -217,8 +229,9 @@ Read `athlete/consistency-log.md`. For the synced week(s), compute:
 - Swimming: session count, total distance (meters), total duration
 - Weights: session count
 - Total hours across all disciplines
+- **Plan Adherence:** sessions completed within ±10% tolerance / sessions planned (e.g., "3/4 (75%)"). Note any specific shortfalls in the Notes column (e.g., "Long ride: 62% duration").
 
-Add or update the row for each week. Prune any rows for weeks older than 12 weeks.
+Add or update the row for each week. Ensure the Weekly Totals table has a `Plan Adherence` column. Prune any rows for weeks older than 12 weeks.
 
 ### Step 9: Update sync state
 
@@ -236,17 +249,24 @@ Glob all `workouts/plans/**/*.md` files with `status: pending`. Regenerate `over
 
 ### Step 11: Summary to athlete
 
-Print a human-readable summary:
+Print a human-readable summary. Apply `coaching_mode` tone to the narrative portions.
+
 ```
 Sync complete — [date]
   Activities fetched: [N]
   Matched to plans: [N]
   Unplanned: [N]
   Missed/skipped: [N]
+  Plan adherence: [X/Y sessions (Z%)]
 
 Reflection written: workouts/reflections/[week]-reflection.md
 Consistency log updated: athlete/consistency-log.md
 [If at least one PR value changed: Strength PRs updated: athlete/profile.md]
+
+[Narrative summary — tone per coaching_mode:
+  coach: brief encouraging pattern observation + forward look
+  accountability: plain statement of adherence and gap vs event requirements (name shortfalls directly)
+  data: bullet list of key numbers only — no narrative]
 
 [Any issues or action items for the athlete]
 ```

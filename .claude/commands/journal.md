@@ -8,7 +8,7 @@ Records how the athlete is feeling — energy, fatigue, mood, stress, sleep, sor
 
 ### Step 1: Load context
 
-Read `athlete/profile.md` for current goals, availability, and any noted injuries.
+Read `athlete/profile.md` for current goals, availability, any noted injuries, and `coaching_mode` (default: `coach` if missing).
 
 Read `overview/pending.md` to know what's coming up.
 
@@ -189,6 +189,8 @@ _Last updated: YYYY-MM-DD_
 
 ### Step 8: Confirmation summary
 
+Apply `coaching_mode` tone to the summary narrative.
+
 ```
 Journal saved: journals/YYYY-WXX/YYYY-MM-DD-journal.md
 
@@ -200,9 +202,16 @@ Today's snapshot:
   Run /calendar to see your updated schedule.
 
 [If no adjustment:]
-  No adjustment needed — signals look fine for your upcoming sessions.
+  [coach: "No adjustment needed — signals look fine for your upcoming sessions."]
+  [accountability: "No adjustment triggered. Upcoming sessions stand as planned."]
+  [data: "No adjustment triggered."]
 
 [If context = post-session AND session was linked:]
   Linked to: [session name]
   This will be visible in the next /review reflection.
+
+[Optional brief signal commentary — tone per coaching_mode:
+  coach: one encouraging or contextualising sentence if signals are notable
+  accountability: if fatigue/energy/stress are borderline (e.g. fatigue=3), note plainly what this means for next session quality without softening
+  data: omit all commentary — numbers only]
 ```

@@ -25,26 +25,41 @@ Glob `journals/**/*.md` sorted by date descending — read the entries from the 
 
 After the reflection is written, produce a human-readable narrative summary (distinct from the reflection's session-by-session breakdown).
 
+Read `coaching_mode` from `athlete/profile.md` (default: `coach` if missing). Apply the corresponding tone to all narrative sections. Mode definitions are in CLAUDE.md under Core Behaviors → Coaching Mode.
+
 Structure:
 ```
 ## Weekly Review — Week YYYY-WXX
 
 ### Training Load
 [Compare this week's total volume and intensity to last week.
-E.g., "Volume was up 15% from last week (7h vs 6h). Intensity was similar."]
+E.g., "Volume was up 15% from last week (7h vs 6h). Intensity was similar."
+accountability mode: include plan adherence % explicitly here.]
+
+### Plan Adherence
+[Only include as a standalone section in accountability mode.
+State: X/Y sessions completed within tolerance (Z%). Name each shortfall with specifics — duration %, zone deviation, etc.]
 
 ### Key Wins
 - [Specific session that went particularly well]
 - [PR or personal milestone if applicable]
 - [Consistency streak or other positive pattern]
+[data mode: bullet list of metrics only, no prose]
 
 ### Areas to Address
-- [Missed sessions or underperformance, stated constructively]
-- [Any HR or power trends that suggest fatigue or undertraining]
+- [Missed sessions or underperformance]
+[coach mode: stated constructively
+accountability mode: named plainly — "this is the Nth consecutive week without X"; no softening until the shortfall is named
+data mode: numbers only — "N sessions missed, Y% below planned volume"]
+
+### Goal Trajectory
+[Only include if Performance Targets are defined in athlete/profile.md.
+For each target: where the athlete is now, what the goal requires, and the gap.
+accountability mode: state gaps plainly and compare to time remaining before deadline.
+data mode: table format — Target | Current | Goal | Gap | Deadline]
 
 ### Subjective Signals This Week
-[Only include this section if journal entries exist for the week. Summarise patterns, e.g.:
-"3 of 5 journal entries flagged high stress (≥4/5). Energy trended low mid-week. This likely explains the reduced output on Wednesday's threshold session."
+[Only include this section if journal entries exist for the week. Summarise patterns.
 If no entries: omit this section entirely.]
 
 ### 4-Week Trajectory
@@ -52,10 +67,11 @@ If no entries: omit this section entirely.]
 Mention each discipline separately if the trends differ.]
 
 ### Recommendation for Next Week
-[One concrete, actionable suggestion — e.g., "Focus on your long Z2 ride — you've skipped it two weeks in a row" or "You're well-rested; a quality threshold session would be beneficial"]
+[One concrete, actionable suggestion.
+coach mode: forward-looking and encouraging
+accountability mode: directly tied to the biggest adherence or goal gap this week
+data mode: one sentence — the metric that most needs attention and why]
 ```
-
-**Tone:** Honest, data-driven, encouraging. Focus on patterns not individual failures. Always end with a forward-looking recommendation.
 
 ### Step 4: Offer to plan next week
 
