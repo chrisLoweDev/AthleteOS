@@ -18,7 +18,8 @@ venv/
 /workouts/completed
 /workouts/reflections
 /journals
-/memory
+/memory/*
+!/memory/MEMORY.md
 overview/pending.md
 overview/strava-sync.json
 overview/journal-summary.md
