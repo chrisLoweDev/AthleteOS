@@ -99,7 +99,8 @@ For each approved modification:
 - Edit the workout file body: update main set watt ranges, paces, durations, and TSS estimate
 - Add to the YAML frontmatter: `edit_note: "Adjusted YYYY-MM-DD — [brief reason]"`
 - The `status` field stays `pending` — the session still exists
-- Do not alter the original `planned_duration_min` or `planned_distance_km` frontmatter fields — these represent the original plan for reflection comparison
+- **Update `planned_duration_min` and `planned_distance_km` to the adjusted values** — these must always reflect the current target so that `overview/pending.md` and `/fetch-activities` comparisons are accurate
+- If the values changed, add `original_duration_min` and `original_distance_km` fields to preserve the pre-adjustment values for historical reference
 
 **Skip / archive session:**
 - Edit frontmatter: set `status: archived`, add `edit_note: "Archived YYYY-MM-DD — [athlete's reason]"`

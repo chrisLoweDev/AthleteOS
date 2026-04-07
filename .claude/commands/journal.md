@@ -165,7 +165,8 @@ For each approved modification, follow the same edit pattern as `/edit-plan`:
 **Intensity / duration change:**
 - Edit the workout file body: update main set targets (watt ranges, paces, durations)
 - Add to YAML frontmatter: `edit_note: "Adjusted YYYY-MM-DD — journal signal: [brief reason]"`
-- Do NOT alter original `planned_duration_min` or `planned_distance_km` — these represent the original plan
+- **Update `planned_duration_min` and `planned_distance_km` to the adjusted values** — these must always reflect the current target so that `overview/pending.md` and `/fetch-activities` comparisons are accurate
+- If the values changed, add `original_duration_min` and `original_distance_km` fields to preserve the pre-adjustment values for historical reference
 
 **Archive session (rest day proposal):**
 - Edit frontmatter: `status: archived`, `edit_note: "Archived YYYY-MM-DD — journal: fatigue + low energy"`
