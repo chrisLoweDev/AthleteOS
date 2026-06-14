@@ -84,21 +84,40 @@ def parse_frontmatter(text):
 
 def parse_table_rows(text, section_header):
     """Extract rows from a markdown table under the given section header."""
-    pattern = rf'## {re.escape(section_header)}\n(.*?)(?=\n## |\Z)'
+    # Allow optional suffix on header line (e.g. "## Warm Up (20 min)")
+    pattern = rf'## {re.escape(section_header)}[^\n]*\n(.*?)(?=\n## |\Z)'
     match = re.search(pattern, text, re.DOTALL)
     if not match:
         return []
 
     rows = []
+    skip_first_col = False
     for line in match.group(1).splitlines():
         line = line.strip()
         if not line.startswith('|') or line.startswith('|---') or line.startswith('| ---'):
             continue
         cells = [c.strip() for c in line.strip('|').split('|')]
-        if cells and cells[0].lower() == 'exercise':
+        # Detect Label column in header row and skip it for all subsequent rows
+        if cells and cells[0].lower() in ('label', 'exercise'):
+            skip_first_col = cells[0].lower() == 'label'
             continue
+        if skip_first_col:
+            cells = cells[1:]
         if len(cells) >= 3:
             rows.append(cells)
+    return rows
+
+
+def parse_all_superset_rows(text):
+    """Extract rows from all Superset and Solo sections."""
+    pattern = r'## (?:Superset|Solo)[^\n]*\n(.*?)(?=\n## |\Z)'
+    rows = []
+    for match in re.finditer(pattern, text, re.DOTALL):
+        section_text = match.group(0)
+        # Reuse parse_table_rows logic by extracting the section header name
+        header_match = re.match(r'## ((?:Superset|Solo)[^\n]*)', section_text)
+        if header_match:
+            rows.extend(parse_table_rows(text, header_match.group(1)))
     return rows
 
 
@@ -195,15 +214,13 @@ def parse_weights_list(weight_str, total_count):
     return [val] * total_count
 
 
-def build_exercises(main_rows, accessory_rows):
+def build_exercises(warmup_section_rows, main_rows, accessory_rows):
     """
     Build Hevy exercise objects from parsed table rows.
 
+    Warm Up table columns:     Exercise | Sets | Reps | Target Weight | Actual Weight | Notes
     Main Lifts table columns:  Exercise | Sets | Reps | Target Weight | Actual Weight | Notes
     Accessory Work table cols: Exercise | Sets | Reps | Target Weight | Actual Weight
-
-    Both sets/reps columns accept plain integers OR compound strings
-    (e.g. "2 warm-up + 5 working", "6 / 6 / 5 / 5 / 5 / 5 / 5").
 
     Returns list of exercise dicts ready for the Hevy API payload.
     Raises SystemExit(3) if an exercise name is not in HEVY_EXERCISE_IDS.
@@ -211,7 +228,7 @@ def build_exercises(main_rows, accessory_rows):
     exercise_sets = {}   # name → list of set dicts
     exercise_order = []
 
-    def add_row(cells, has_notes):
+    def add_row(cells, has_notes, force_warmup=False):
         name = cells[0]
         sets_str = cells[1] if len(cells) > 1 else "1"
         reps_str = cells[2] if len(cells) > 2 else "0"
@@ -235,8 +252,9 @@ def build_exercises(main_rows, accessory_rows):
             exercise_order.append(name)
 
         for i in range(total_count):
-            # Determine set type
-            if warmup_count > 0:
+            if force_warmup:
+                set_type = "warmup"
+            elif warmup_count > 0:
                 set_type = "warmup" if i < warmup_count else "normal"
             else:
                 set_type = "warmup" if "warm-up" in notes.lower() else "normal"
@@ -246,6 +264,9 @@ def build_exercises(main_rows, accessory_rows):
                 "weight_kg": weights_per_set[i],
                 "reps": reps_per_set[i],
             })
+
+    for cells in warmup_section_rows:
+        add_row(cells, has_notes=True, force_warmup=True)
 
     for cells in main_rows:
         add_row(cells, has_notes=True)
@@ -257,7 +278,7 @@ def build_exercises(main_rows, accessory_rows):
     for name in exercise_order:
         exercises.append({
             "exercise_template_id": HEVY_EXERCISE_IDS[name],
-            "notes": "",
+            "notes": None,
             "sets": exercise_sets[name],
         })
     return exercises
@@ -291,15 +312,17 @@ def main():
     date_str = fm.get("date", "").strip()
     title = f"{date_str} - {key_focus}" if date_str else key_focus
 
+    warmup_rows = parse_table_rows(text, "Warm Up")
     main_rows = parse_table_rows(text, "Main Lifts")
     accessory_rows = parse_table_rows(text, "Accessory Work")
     core_rows = parse_table_rows(text, "Core")
+    superset_rows = parse_all_superset_rows(text)
 
-    if not main_rows and not accessory_rows and not core_rows:
+    if not warmup_rows and not main_rows and not accessory_rows and not core_rows and not superset_rows:
         print("ERROR: No exercise tables found in file.", file=sys.stderr)
         sys.exit(1)
 
-    exercises = build_exercises(main_rows, accessory_rows + core_rows)
+    exercises = build_exercises(warmup_rows, main_rows + superset_rows, accessory_rows + core_rows)
 
     payload = {
         "routine": {

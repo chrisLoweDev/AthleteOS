@@ -215,7 +215,7 @@ For endurance athletes where weights support sport performance, not maximise str
 5. Mobility drills as programmatic close — never ad hoc
 
 **Session structure template:**
-1. Warm-up (10 min): activation + primer for the day's primary patterns
+1. Warm-up (20 min): activation + primer for the day's primary patterns — **use a markdown table (same format as Main Lifts) with exercises from `data/hevy-exercises.json` only, so the section uploads to Hevy**
 2. Primary compound: 4–5 sets including warm-ups
 3. Secondary compound: 3–4 working sets
 4. Tertiary compound or heavy accessory: 3 working sets

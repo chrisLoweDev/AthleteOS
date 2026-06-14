@@ -29,6 +29,20 @@ Filter out any activities whose `id` is already in `seen_ids` (already processed
 
 If the resulting list is empty: say "No new Strava activities since [date]" and stop.
 
+### Step 2b: Fetch performance data for cycling activities
+
+For each new activity where `sport_type` is `Ride`, `VirtualRide`, or `EBikeRide`: call the Strava MCP tool `get_activity_performance` with the activity ID.
+
+Store the result alongside the activity for use in Steps 3–6. Key fields to extract and use in the reflection:
+- `average_watts` and `average_heartrate` — overall effort summary
+- `has_device_watts` — if false, note "no power meter" and rely on HR only
+- `best_efforts` — extract power curve values: 5s, 30s, 1min, 5min, 10min, 20min, 1hr peaks. Express each as both absolute watts and % of FTP from `athlete/profile.md` to identify the training zone.
+- `segment_efforts` — scan for notable climbs (high `avg_watts` relative to FTP, or long `elapsed_time`). Surface the top 3 efforts by avg_watts in the session notes.
+
+Use this data in **Step 6 session analysis** to populate the Actual row with: distance, moving time, avg power (W and % FTP), avg HR (bpm and zone), and peak efforts. For VirtualRide activities, ignore elevation, gradients, and segment context — focus on avg watts, NP (if available), HR, and lap structure only (per ERG mode convention).
+
+If `get_activity_performance` fails or returns no data for an activity, continue the sync and note "Performance data unavailable" for that session.
+
 ### Step 3: Match activities to planned workouts
 
 Glob `workouts/plans/**/*.md` and read frontmatter from all files with `status: pending`.
@@ -157,6 +171,18 @@ Determine the ISO week(s) of the fetched activities. Create a reflection file fo
 - Adherence = completed / planned, expressed as X/Y (Z%)
 - Note any specific shortfalls (e.g., "Long ride: 84 min of 135 planned, 62%")
 
+**Intensity audit (cycling sessions only):** For each cycling session, compare the planned intensity zone (from the plan file's `key_focus` or session description) against the actual execution using performance data from Step 2b:
+
+1. **Determine planned zone** — read the plan file to identify the target zone (e.g., Z2 endurance, Z4 threshold intervals).
+2. **Assess actual intensity** — use `average_watts` vs FTP zones, and scan `best_efforts` for 5min and 20min peak power to understand whether the athlete spent meaningful time above the planned zone.
+3. **Flag and contextualise any divergence:**
+   - If avg power is in a higher zone than planned: note this explicitly. Then assess whether it was likely driven by route/terrain (unavoidable climbs), group dynamics, or a deliberate choice — and state the likely cause.
+   - If avg power is on target but peak efforts (e.g., 5min power) are well into Z4/Z5: note that average hides intensity spikes. Clarify that brief hard efforts on climbs within an otherwise Z2 ride are normal and generally fine — but flag if they were frequent or prolonged enough to affect recovery.
+   - If avg power is below plan (e.g., Z1 when Z3 was planned): flag as underperformance and note impact.
+4. **Provide a recovery implication:** state whether the intensity exceedance is likely to require additional recovery time before the next hard session, or whether it is inconsequential. Reference the next planned session in `overview/pending.md` if relevant.
+
+This audit replaces the simple "on target / over / under" Result line for cycling sessions — include it as an **Intensity** sub-field alongside the Result line in the session analysis block.
+
 **Coaching tone:** Apply `coaching_mode` from profile.md to all narrative sections (Observations, Fitness Trajectory, Recommendation). The Session Analysis Notes per session should also reflect the mode. Mode definitions are in CLAUDE.md under Core Behaviors → Coaching Mode.
 
 Reflection structure:
@@ -176,7 +202,8 @@ _Generated: [today's date]_
 ### [Date] — [Type]: [Activity Name]
 - **Planned:** [duration/distance/intensity from plan file]
 - **Actual:** [duration/distance/avg power or pace/avg HR from Strava]
-- **Result:** [on target / over / under] (±10% tolerance)
+- **Result:** [on target / over / under] (±10% tolerance on duration/distance)
+- **Intensity:** *(cycling only)* [planned zone vs actual avg power zone; note any Z4/Z5 exceedances, their likely cause, and recovery implication]
 - **Notes:** [AI coaching observation — 1-2 sentences, tone per coaching_mode]
 
 [Repeat for each matched pair]
