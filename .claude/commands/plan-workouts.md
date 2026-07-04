@@ -129,7 +129,6 @@ type: cycling
 discipline: Ride
 status: pending
 planned_duration_min: [X]
-planned_distance_km: [X or null]
 week_folder: YYYY-WXX
 key_focus: "[description]"
 strava_activity_id: null
@@ -163,7 +162,6 @@ type: running
 discipline: Run
 status: pending
 planned_duration_min: [X]
-planned_distance_km: [X]
 week_folder: YYYY-WXX
 key_focus: "[description]"
 strava_activity_id: null
@@ -172,7 +170,7 @@ strava_activity_id: null
 # [YYYY-MM-DD] Running: [Session Name]
 
 **Date:** [Day, DD Month YYYY]
-**Target Distance:** [X] km | **Duration:** ~[X] min
+**Duration:** ~[X] min
 
 ## Warm Up
 - [Warm-up with pace targets computed from threshold pace]
@@ -196,7 +194,6 @@ type: weights
 discipline: WeightTraining
 status: pending
 planned_duration_min: [X]
-planned_distance_km: null
 week_folder: YYYY-WXX
 key_focus: "[Upper/Lower/Full Body] strength"
 strava_activity_id: null

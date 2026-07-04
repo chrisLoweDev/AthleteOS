@@ -67,7 +67,18 @@ def normalize_activity(activity: dict) -> dict:
         'average_speed_mps': activity.get('average_speed'),
         'max_speed_mps': activity.get('max_speed'),
         'kilojoules': activity.get('kilojoules'),
+        'device_watts': activity.get('device_watts'),
         'description': activity.get('description'),
+        # EF only on real device power — estimated watts (device_watts=False) produce unreliable EF
+        'efficiency_factor': (
+            round(
+                activity.get('weighted_average_watts') / activity.get('average_heartrate'), 3
+            )
+            if activity.get('device_watts')
+               and activity.get('weighted_average_watts')
+               and activity.get('average_heartrate')
+            else None
+        ),
         # Detail-only fields (null in summary mode)
         'splits_metric': activity.get('splits_metric'),
         'laps': activity.get('laps'),
