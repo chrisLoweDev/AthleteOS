@@ -215,6 +215,50 @@ For confirmed missed/skipped workouts: change `status: pending` → `status: mis
 
 ### Step 6b: Log Efficiency Factor to progress-metrics.md
 
+**If `overview/progress-metrics.md` does not exist**, create it with the following structure before appending any rows:
+
+```markdown
+# Progress Metrics
+
+_Updated automatically by `/fetch-activities`. Cycling activities with both power meter and HR data only._
+_Last updated: YYYY-MM-DD_
+
+---
+
+## Efficiency Factor (NP ÷ Avg HR)
+
+**What it measures:** How many watts your heart produces per beat. As aerobic fitness improves, this number rises — the same or more power at a lower heart rate.
+
+**How to read it:** Compare like-with-like. Z2 rides cluster in one band, threshold sessions in another. The trend within each cluster over 6–8 weeks is the signal — not the absolute number or cross-zone comparisons.
+
+**Rule of thumb:** A sustained upward trend of ~5% in EF on Z2 rides over 8 weeks indicates meaningful aerobic adaptation.
+
+**Data quality note:** EF is only logged when Strava confirms device watts (`device_watts: true`). Estimated power (rides without a power meter) is excluded — it's based on speed + gradient and introduces systematic error that would corrupt the trend.
+
+| Date | Activity | Zone | Duration | NP (W) | Avg HR | EF | Notes |
+|------|----------|------|----------|--------|--------|----|-------|
+
+---
+
+## 4-Week EF Summary (Cycling)
+
+_Computed at each `/review`. Compares avg EF this 4-week block vs previous 4-week block._
+
+| Period | Rides with EF data | Avg EF (Z2) | Avg EF (all) | vs Prior Period |
+|--------|-------------------|-------------|--------------|-----------------|
+
+---
+
+## What to Watch From Here
+
+Once 4+ Z2 rides are logged, a reliable baseline will emerge. Track:
+- **Tuesday sweet spot / threshold** — track EF separately; will be ~1.2–1.5 depending on effort
+- **Saturday long Z2** — this is the primary EF trend signal; target a rising EF band over 8–12 weeks
+- **Sunday easy Z2** — secondary confirmation signal
+```
+
+Also update the `_Last updated:_` line to today's date each time rows are added.
+
 For each cycling activity processed in this sync where `efficiency_factor` is non-null (i.e., both `weighted_average_watts` and `average_heartrate` are present):
 
 1. Determine the session zone from the plan file's `key_focus` or, for unplanned sessions, from the `average_watts` vs FTP: Z1 (<55% FTP), Z2 (56–75%), Z3 (76–90%), Z4 (91–105%), Z5 (106–120%).

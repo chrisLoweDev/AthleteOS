@@ -23,4 +23,5 @@ venv/
 overview/pending.md
 overview/strava-sync.json
 overview/journal-summary.md
+overview/progress-metrics.md
 data/hevy-exercises.json
